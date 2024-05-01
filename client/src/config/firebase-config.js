@@ -13,7 +13,7 @@ const firebaseConfig = {
   storageBucket: "reactventure-9cf76.appspot.com",
   messagingSenderId: "650631874031",
   appId: "1:650631874031:web:d4187efa2bb1439bce621a",
-  databaseURL: "https://reactventure-9cf76-default-rtdb.europe-west1.firebasedatabase.app/:null"
+  databaseURL: "https://reactventure-9cf76-default-rtdb.europe-west1.firebasedatabase.app/"
 
 };
 

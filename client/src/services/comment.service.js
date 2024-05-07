@@ -3,18 +3,18 @@ import { db } from '../config/firebase-config';
 
 export const addComment = async(postId, author, content) => {
     const comment = {
-        postId,
         author,
         content,
         createdOn: Date.now(),
     };
 
-    const result = await push(ref(db, 'comments'), comment);
+    const result = await push(ref(db, `posts/${postId}/comments`), comment);
     console.log(result.key);
 };
 
+
 export const getAllComments = async (postId) => {
-    const snapshot = await get(ref(db, 'comments'));
+    const snapshot = await get(ref(db, `posts/${postId}/comments`));
     if (!snapshot.exists()) return [];
 
     const comments = Object.entries(snapshot.val()).map(([key, value]) => ({
@@ -24,34 +24,37 @@ export const getAllComments = async (postId) => {
         createdOn: new Date(value.createdOn).toString(),
     }));
 
-    return comments.filter(comment => comment.postId === postId);
+    return comments;
 };
 
-export const getCommentById = async(id) => {
-    const snapshot = await get(ref(db, `comments/${id}`));
+
+export const getCommentById = async(postId, commentId) => {
+    const snapshot = await get(ref(db, `posts/${postId}/comments/${commentId}`));
 
     if (!snapshot.val()) throw new Error('Comment with this id does not exist!');
 
     return {
         ...snapshot.val(),
-        id,
+        id: commentId,
         likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
         createdOn: new Date(snapshot.val().createdOn).toString(),
     }
 };
 
-export const likeComment = async(commentId, handle) => {
+
+export const likeComment = async(postId, commentId, handle) => {
     const updateVal = {};
     updateVal[`users/${handle}/likedComments/${commentId}`] = true;
-    updateVal[`comments/${commentId}/likedBy/${handle}`] = true;
+    updateVal[`posts/${postId}/comments/${commentId}/likedBy/${handle}`] = true;
 
     update(ref(db), updateVal);
 };
 
-export const dislikeComment = async(commentId, handle) => {
+export const dislikeComment = async(postId, commentId, handle) => {
     const updateVal = {};
     updateVal[`users/${handle}/likedComments/${commentId}`] = null;
-    updateVal[`comments/${commentId}/likedBy/${handle}`] = null;
+    updateVal[`posts/${postId}/comments/${commentId}/likedBy/${handle}`] = null;
 
     update(ref(db), updateVal);
 };
+

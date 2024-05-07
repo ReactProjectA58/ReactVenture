@@ -73,18 +73,13 @@ export default function Register() {
         return;
       }
 
-      const credential = await registerUser(
-        form.email,
-        form.password,
-        form.firstName,
-        form.lastName
-      );
+      const credential = await registerUser(form.email, form.password);
       await createUserHandle(
+        form.firstName,
+        form.lastName,
         form.username || form.email, // Use username if available, otherwise use email
         credential.user.uid,
-        credential.user.email,
-        credential.user.firstName,
-        credential.user.lastName
+        credential.user.email
       );
       setAppState({ user: credential.user, userData: null });
       navigate("/");

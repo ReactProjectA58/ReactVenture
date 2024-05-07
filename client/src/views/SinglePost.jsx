@@ -24,10 +24,10 @@ export default function SinglePost() {
     }, [id]);
 
     useEffect(() => {
-        const commentsRef = ref(db, 'comments');
-        const commentsQuery = query(commentsRef, orderByChild('postId'), equalTo(id));
+        const postCommentsRef = ref(db, `posts/${id}/comments`);
+        const postCommentsQuery = query(postCommentsRef);
     
-        const unsubscribe = onValue(commentsQuery, (snapshot) => {
+        return onValue(postCommentsQuery, (snapshot) => {
             const commentsData = snapshot.val();
             if (commentsData) {
                 const commentsArray = Object.keys(commentsData).map(key => ({
@@ -41,9 +41,9 @@ export default function SinglePost() {
                 setComments([]);
             }
         });
+        
+    }, [id]); 
     
-        return () => unsubscribe();
-    }, [id]);
 
     const handleAddComment = async () => {
         if (!userData) {

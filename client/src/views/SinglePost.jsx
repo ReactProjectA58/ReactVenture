@@ -16,18 +16,28 @@ export default function SinglePost() {
     const { userData } = useContext(AppContext);
 
     useEffect(() => {
-        async function fetchPost() {
-            const fetchedPost = await getPostById(id);
-            setPost(fetchedPost);
-        }
-        fetchPost();
-    }, [id]);
+        return onValue(ref(db, `posts/${id}`), (snapshot) => {
+          const postData = snapshot.val();
+          if (postData) {
+            setPost({
+              ...postData,
+              id,
+              likedBy: postData.likedBy ? Object.keys(postData.likedBy) : [],
+              createdOn: new Date(postData.createdOn).toString(),
+              comments: postData.comments || [],
+            });
+          } else {
+            setPost(null);
+          }
+        });
+    
+      }, [id]);
 
     useEffect(() => {
-        const postCommentsRef = ref(db, `posts/${id}/comments`);
-        const postCommentsQuery = query(postCommentsRef);
+        const commentsRef = ref(db, 'comments');
+        const commentsQuery = query(commentsRef, orderByChild('postId'), equalTo(id));
     
-        return onValue(postCommentsQuery, (snapshot) => {
+        const unsubscribe = onValue(commentsQuery, (snapshot) => {
             const commentsData = snapshot.val();
             if (commentsData) {
                 const commentsArray = Object.keys(commentsData).map(key => ({
@@ -41,22 +51,24 @@ export default function SinglePost() {
                 setComments([]);
             }
         });
-        
-    }, [id]); 
     
+        return () => unsubscribe();
+    }, [id]);
 
     const handleAddComment = async () => {
         if (!userData) {
             return;
         }
         await addComment(id, userData.handle, newCommentContent);
+        const newComments = await getAllComments(id);
+        setComments(newComments);
         setNewCommentContent('');
     };
-
+    
     return (
         <div>
             <h1>Single Post</h1>
-            {post && <Post post={post} />}
+            {post && <Post post={post} showViewButton={false} />}
             <div>
                 <h2>Comments</h2>
                 {/* Input field for adding new comment */}

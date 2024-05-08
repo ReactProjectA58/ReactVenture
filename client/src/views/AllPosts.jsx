@@ -60,36 +60,15 @@ export default function AllPosts() {
     setDeletedPosts(deletedPosts.filter((post) => post.id !== postId));
   };
 
-  return (
-    <div>
-      <h1>All posts</h1>
-      <label htmlFor="search">Search</label>
-      <input
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        type="text"
-        name="search"
-        id="search"
-      />
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          post={post}
-          onRemove={userIsAdmin ? () => handleRemovePost(post.id) : null}
-        />
-      ))}
-
-      {/* Deleted posts section */}
-      {deletedPosts.length > 0 && (
+    return (
         <div>
-          <h2>Deleted Posts</h2>
-          {deletedPosts.map((post) => (
-            <Post
-              key={post.id}
-              post={post}
-              onRestore={userIsAdmin ? () => handleRestorePost(post.id) : null}
-            />
-          ))}
+            <h1>All posts</h1>
+            <label htmlFor="search">Search</label>
+            <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" />
+            {posts.map((post) => (
+                <Post key={post.id} post={post} showViewButton={true} />
+            ))}
+
         </div>
       )}
     </div>

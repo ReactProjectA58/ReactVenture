@@ -44,7 +44,7 @@ export default function AllPosts() {
             <label htmlFor="search">Search</label>
             <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" />
             {posts.map((post) => (
-                <Post key={post.id} post={post}/>
+                <Post key={post.id} post={post} showViewButton={true} />
             ))}
 
         </div>

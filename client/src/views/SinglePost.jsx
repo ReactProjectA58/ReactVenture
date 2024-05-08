@@ -68,7 +68,7 @@ export default function SinglePost() {
     return (
         <div>
             <h1>Single Post</h1>
-            {post && <Post post={post} />}
+            {post && <Post post={post} showViewButton={false} />}
             <div>
                 <h2>Comments</h2>
                 {/* Input field for adding new comment */}

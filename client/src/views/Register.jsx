@@ -93,6 +93,7 @@ export default function Register() {
   return (
     <div>
       <h1>Register</h1>
+      {/* {user.isAdmin && <div>hui</div>} */}
 
       <label htmlFor="firstName">First Name:</label>
       <input

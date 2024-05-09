@@ -1,6 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { getPostById } from "../services/posts.service";
+import {
+  getPostById,
+  restorePost,
+  removePost,
+} from "../services/posts.service";
 import Post from "../components/Post/Post";
 import Comment from "../components/Comments/Comment";
 import { addComment, getAllComments } from "../services/comment.service";
@@ -58,7 +62,15 @@ export default function SinglePost() {
   return (
     <div>
       <h1>Single Post</h1>
-      {post && <Post post={post} />}
+      {post && (
+        <Post
+          post={post}
+          onRemove={() => removePost(post.id) && window.open(`/posts`, "_self")}
+          onRestore={() =>
+            restorePost(post.id) && window.open(`/posts`, "_self")
+          }
+        />
+      )}
       <div>
         <h2>Comments</h2>
         {/* Input field for adding new comment */}

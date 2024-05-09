@@ -65,12 +65,15 @@ export default function Post({ post, onRemove, onRestore }) {
         <button onClick={like}>Like</button>
       )}
 
-      {userData.isAdmin && (
-        <button
-          type={isPostDeleted ? "restore-but" : "remove-but"}
-          onClick={isPostDeleted ? restore : remove}
-        >
-          {isPostDeleted ? "Restore post" : "Remove post"}
+      {isPostDeleted && userData.isAdmin && post.isDeleted && (
+        <button type="restore-but" onClick={restore}>
+          Restore post
+        </button>
+      )}
+
+      {!isPostDeleted && userData.isAdmin && !post.isDeleted && (
+        <button type="remove-but" onClick={remove}>
+          Remove post
         </button>
       )}
     </div>

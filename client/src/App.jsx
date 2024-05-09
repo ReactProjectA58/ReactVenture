@@ -17,6 +17,7 @@ import { getUserData } from "./services/users.service.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./config/firebase-config.js";
 import DeletedPosts from "./views/DeletedPosts"; // Import the DeletedPosts component
+import UserSearch from "./views/UserSearch.jsx";
 
 function App() {
   const [appState, setAppState] = useState({
@@ -49,14 +50,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route
-              path="/posts"
-              element={
-                <Authenticated>
-                  <AllPosts />
-                </Authenticated>
-              }
-            />
+            <Route path="/posts" element={<AllPosts />} />
             <Route
               path="/posts/:id"
               element={
@@ -80,7 +74,15 @@ function App() {
                   <DeletedPosts />
                 </Authenticated>
               }
-            />{" "}
+            />
+            <Route
+              path="/user-search"
+              element={
+                <Authenticated>
+                  <UserSearch />
+                </Authenticated>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />

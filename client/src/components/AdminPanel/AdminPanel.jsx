@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
-const AdminPanelDropdown = () => {
+export default function AdminPanelDropdown() {
   return (
     <div className="dropdown">
       <button
@@ -19,18 +19,14 @@ const AdminPanelDropdown = () => {
           </Link>
         </li>
         <li>
-          <Link className="dropdown-item" to="/deleted">
-            blabla
+          <Link className="dropdown-item" to="/user-search">
+            Users searcher
           </Link>
         </li>
         <li>
-          <Link className="dropdown-item" to="/deleted">
-            blablabla
-          </Link>
+          <Link className="dropdown-item">blablabla</Link>
         </li>
       </ul>
     </div>
   );
-};
-
-export default AdminPanelDropdown;
+}

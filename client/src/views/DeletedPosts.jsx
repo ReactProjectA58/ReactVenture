@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getDeletedPosts, restorePost } from "../services/posts.service";
 import Post from "../components/Post/Post";
+import { AppContext } from "../context/AppContext";
 
 export default function DeletedPosts() {
   const [deletedPosts, setDeletedPosts] = useState([]);
+  const { userData } = useContext(AppContext);
 
   useEffect(() => {
     getDeletedPosts().then(setDeletedPosts);
@@ -20,8 +22,12 @@ export default function DeletedPosts() {
       {deletedPosts.map((post) => (
         <Post
           key={post.id}
-          post={post}
-          onRestore={() => handleRestorePost(post.id)}
+          post={{
+            ...post,
+            likedBy: Array.isArray(post.likedBy) ? post.likedBy : [],
+            createdOn: new Date(post.createdOn).toString(),
+          }}
+          onRestore={() => userData.isAdmin && handleRestorePost(post.id)}
         />
       ))}
     </div>

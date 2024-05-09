@@ -1,20 +1,19 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 /**
- * 
- * @param {{children: any, onClick: function }} props 
- * @returns 
+ *
+ * @param {{children: any, onClick: function }} props
+ * @returns
  */
-export default function Button({children = null, onClick = () => {}}) {
-
-    return(
-        <>
-            <button onClick={onClick}>{children}</button>
-        </>
-    );
+export default function Button({ children = null, onClick = () => {} }) {
+  return (
+    <>
+      <button onClick={onClick}>{children}</button>
+    </>
+  );
 }
 
 Button.propTypes = {
-    children: PropTypes.any,
-    onClick: PropTypes.func,
-}
+  children: PropTypes.any,
+  onClick: PropTypes.func,
+};

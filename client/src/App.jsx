@@ -32,9 +32,10 @@ function App() {
     if (!appState.user) return;
 
     getUserData(appState.user.uid).then((snapshot) => {
-      // console.log(snapshot.val()); // { pesho: {...} }
       const userData = Object.values(snapshot.val())[0];
       setAppState({ ...appState, userData });
+      // console.log(snapshot.val()); // { pesho: {...} }
+      // console.log(userData);
     });
   }, [appState.user]);
 

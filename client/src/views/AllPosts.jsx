@@ -16,7 +16,7 @@ export default function AllPosts() {
   const [deletedPosts, setDeletedPosts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
-  const { userIsAdmin } = useContext(AppContext);
+  const { userData } = useContext(AppContext);
 
   const setSearch = (value) => {
     setSearchParams({ search: value });
@@ -49,28 +49,33 @@ export default function AllPosts() {
   const handleRemovePost = async (postId) => {
     await removePost(postId);
     const removedPost = posts.find((post) => post.id === postId);
-    setDeletedPosts([...deletedPosts, removedPost]);
     setPosts(posts.filter((post) => post.id !== postId));
   };
 
   const handleRestorePost = async (postId) => {
     await restorePost(postId);
     const restoredPost = deletedPosts.find((post) => post.id === postId);
-    setPosts([...posts, restoredPost]);
     setDeletedPosts(deletedPosts.filter((post) => post.id !== postId));
   };
 
-    return (
-        <div>
-            <h1>All posts</h1>
-            <label htmlFor="search">Search</label>
-            <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" />
-            {posts.map((post) => (
-                <Post key={post.id} post={post} showViewButton={true} />
-            ))}
-
-        </div>
-      )}
+  return (
+    <div>
+      <h1>All posts</h1>
+      <label htmlFor="search">Search</label>
+      <input
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        type="text"
+        name="search"
+        id="search"
+      />
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          post={post}
+          onRemove={() => userData.isAdmin && handleRemovePost(post.id)}
+        />
+      ))}
     </div>
   );
 }

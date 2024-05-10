@@ -28,10 +28,10 @@ export default function SinglePost() {
   }, [id]);
 
   useEffect(() => {
-    const postCommentsRef = ref(db, `posts/${id}/comments`);
-    const postCommentsQuery = query(postCommentsRef);
+    const commentsRef = ref(db, 'comments');
+    const commentsQuery = query(commentsRef, orderByChild('postId'), equalTo(id));
 
-    return onValue(postCommentsQuery, (snapshot) => {
+    return onValue(commentsQuery, (snapshot) => {
       const commentsData = snapshot.val();
       if (commentsData) {
         const commentsArray = Object.keys(commentsData).map((key) => ({
@@ -56,6 +56,8 @@ export default function SinglePost() {
       return;
     }
     await addComment(id, userData.handle, newCommentContent);
+    const newComments = await getAllComments(id);
+    setComments(newComments);
     setNewCommentContent("");
   };
 

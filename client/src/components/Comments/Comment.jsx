@@ -20,20 +20,16 @@ export default function Comment({ comment }) {
 
   return (
     <div className="comment">
-      <p>{comment?.content}</p>
-      <p>
-        by {comment?.author},{" "}
-        {new Date(comment?.createdOn).toLocaleDateString("bg-BG")}
-      </p>
-
-      {/* Conditional rendering for Like/Dislike button based on whether the comment is liked by the user */}
-      {comment?.likedBy.includes(userData?.handle) ? (
-        <button onClick={handleDislike}>Dislike</button>
-      ) : (
-        <button onClick={handleLike}>Like</button>
-      )}
+        <p>{comment?.content}</p>
+        <p>by {comment?.author}, {new Date(comment?.createdOn).toLocaleDateString('bg-BG')}</p>
+        
+        {/* Conditional rendering for Like/Dislike button based on whether the comment is liked by the user */}
+        {comment?.likedBy.includes(userData?.handle) ? 
+            <button onClick={handleDislike}>Dislike</button> : 
+            <button onClick={handleLike}>Like</button>
+        }
     </div>
-  );
+);
 }
 
 // Prop types for Comment component

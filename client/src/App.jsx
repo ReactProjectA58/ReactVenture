@@ -18,6 +18,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./config/firebase-config.js";
 import DeletedPosts from "./views/DeletedPosts"; // Import the DeletedPosts component
 import UserSearch from "./views/UserSearch.jsx";
+import ProfilePage from "./views/UserProfile.jsx";
 
 function App() {
   const [appState, setAppState] = useState({
@@ -80,6 +81,14 @@ function App() {
               element={
                 <Authenticated>
                   <UserSearch />
+                </Authenticated>
+              }
+            />
+            <Route
+              path="/my-profile"
+              element={
+                <Authenticated>
+                  <ProfilePage />
                 </Authenticated>
               }
             />

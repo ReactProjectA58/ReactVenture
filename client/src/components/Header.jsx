@@ -37,9 +37,17 @@ export default function Header() {
               userData.handle || "Loading"
             }`}</span>
 
-            <Button onClick={logout} className="logout-button">
+            <NavLink to="/my-profile" className="nav-link">
+              My Profile
+            </NavLink>
+
+            <NavLink onClick={logout} className="nav-link">
               LogOut
-            </Button>
+            </NavLink>
+
+            {/* <Button onClick={logout} className="logout-button">
+              LogOut
+            </Button> */}
 
             <span className="admin-panel">
               {userData.isAdmin && <AdminPanelDropdown />}{" "}

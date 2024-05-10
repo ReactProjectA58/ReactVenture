@@ -18,12 +18,7 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
     Array.isArray(post.likedBy) && post.likedBy.includes(userData?.handle)
   );
 
-  // console.log(typeof post.likedBy);
-  // console.log(typeof post.isDeleted);
-
   const [isPostDeleted, setIsPostDeleted] = useState(post.isDeleted);
-
-  // console.log(post.isDeleted);
 
   const like = () => {
     likePost(post.id, userData.handle);
@@ -37,17 +32,15 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
 
   const remove = () => {
     onRemove(post.id);
-    // removePost(post.id);
     setIsPostDeleted(true);
   };
 
   const restore = () => {
     onRestore(post.id);
-    // restorePost(post.id);
     setIsPostDeleted(false);
   };
 
-  // console.log(userData.isAdmin);
+  const isAdmin = userData && userData.isAdmin;
 
   return (
     <div className="post">
@@ -66,13 +59,13 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
         <button onClick={like}>Like</button>
       )}
 
-      {isPostDeleted && userData.isAdmin && post.isDeleted && (
+      {isPostDeleted && isAdmin && post.isDeleted && (
         <button type="restore-but" onClick={restore}>
           Restore post
         </button>
       )}
 
-      {!isPostDeleted && userData.isAdmin && !post.isDeleted && (
+      {!isPostDeleted && isAdmin && !post.isDeleted && (
         <button type="remove-but" onClick={remove}>
           Remove post
         </button>
@@ -90,6 +83,6 @@ Post.propTypes = {
     likedBy: PropTypes.array,
     isDeleted: PropTypes.bool,
     title: PropTypes.string.isRequired,
-    showViewButton: PropTypes.bool.isRequired,
+    showViewButton: PropTypes.bool,
   }),
 };

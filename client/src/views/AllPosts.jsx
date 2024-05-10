@@ -31,7 +31,11 @@ export default function AllPosts() {
       const value = snapshot.val();
       setPosts((posts) =>
         posts.map((t) => {
-          if (t.title === value.title && t.author === value.author && t.content === value.content) {
+          if (
+            t.title === value.title &&
+            t.author === value.author &&
+            t.content === value.content
+          ) {
             if (value.likedBy) {
               t.likedBy = Object.keys(value.likedBy);
             } else {
@@ -70,13 +74,16 @@ export default function AllPosts() {
         id="search"
       />
       {posts.map((post) => (
-        <Post
-          key={post.id}
-          post={post}
-          onRemove={() => userData.isAdmin && handleRemovePost(post.id)}
-          showViewButton={true}
-        />
+        <div key={post.id}>
+          <Post
+            post={post}
+            onRemove={() => userData.isAdmin && handleRemovePost(post.id)}
+            showViewButton={true}
+          />
+          Likes: {post.likedBy ? post.likedBy.length : 0}
+        </div>
       ))}
+
     </div>
   );
 }

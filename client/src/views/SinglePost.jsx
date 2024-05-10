@@ -67,6 +67,7 @@ export default function SinglePost() {
       {post && (
         <Post
           post={post}
+          showViewButton={false} 
           onRemove={() => removePost(post.id) && window.open(`/posts`, "_self")}
           onRestore={() =>
             restorePost(post.id) && window.open(`/posts`, "_self")
@@ -89,4 +90,5 @@ export default function SinglePost() {
       </div>
     </div>
   );
+
 }

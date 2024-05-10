@@ -11,7 +11,7 @@ import {
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 
-export default function Post({ post, onRemove, onRestore }) {
+export default function Post({ post, showViewButton, onRemove, onRestore }) {
   const { user, userData } = useContext(AppContext);
 
   const [isLikedByUser, setIsLikedByUser] = useState(
@@ -58,7 +58,7 @@ export default function Post({ post, onRemove, onRestore }) {
         {new Date(post.createdOn).toLocaleDateString("bg-BG").toString()}
       </p>
 
-      <Link to={`/posts/${post.id}`}>View</Link>
+      {showViewButton && <Link to={`/posts/${post.id}`}>View</Link>}
 
       {isLikedByUser ? (
         <button onClick={dislike}>Dislike</button>
@@ -89,6 +89,7 @@ Post.propTypes = {
     createdOn: PropTypes.string,
     likedBy: PropTypes.array,
     isDeleted: PropTypes.bool,
-    title: PropTypes.string.isRequired, 
+    title: PropTypes.string.isRequired,
+    showViewButton: PropTypes.bool.isRequired,
   }),
 };

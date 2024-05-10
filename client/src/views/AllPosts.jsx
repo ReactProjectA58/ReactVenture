@@ -74,6 +74,7 @@ export default function AllPosts() {
           key={post.id}
           post={post}
           onRemove={() => userData.isAdmin && handleRemovePost(post.id)}
+          showViewButton={true}
         />
       ))}
     </div>

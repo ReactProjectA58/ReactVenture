@@ -11,10 +11,11 @@ import {
 } from "firebase/database";
 import { db } from "../config/firebase-config";
 
-export const addPost = async (author, content) => {
+export const addPost = async (title, content, author) => {
   const post = {
-    author,
+    title,
     content,
+    author,
     createdOn: Date.now(),
     isDeleted: false,
   };

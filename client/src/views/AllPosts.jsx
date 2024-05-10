@@ -31,7 +31,7 @@ export default function AllPosts() {
       const value = snapshot.val();
       setPosts((posts) =>
         posts.map((t) => {
-          if (t.author === value.author && t.content === value.content) {
+          if (t.title === value.title && t.author === value.author && t.content === value.content) {
             if (value.likedBy) {
               t.likedBy = Object.keys(value.likedBy);
             } else {

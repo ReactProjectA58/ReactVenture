@@ -51,6 +51,7 @@ export default function Post({ post, onRemove, onRestore }) {
 
   return (
     <div className="post">
+      <p>{post.title}</p>
       <p>{post.content}</p>
       <p>
         by {post.author},{" "}
@@ -88,5 +89,6 @@ Post.propTypes = {
     createdOn: PropTypes.string,
     likedBy: PropTypes.array,
     isDeleted: PropTypes.bool,
+    title: PropTypes.string.isRequired, 
   }),
 };

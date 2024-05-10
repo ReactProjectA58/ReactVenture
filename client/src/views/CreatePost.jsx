@@ -2,48 +2,74 @@ import { useContext, useState } from "react";
 import Button from "../components/Button";
 import { addPost } from "../services/posts.service";
 import { AppContext } from "../context/AppContext";
+import { POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH, POST_TITLE_MAX_LENGTH, POST_TITLE_MIN_LENGTH } from "../common/constants";
 
 export default function CreatePost() {
-  const [post, setPost] = useState({
-    content: "",
-  });
-  const { userData } = useContext(AppContext);
-
-  const updatePost = (value, key) => {
-    setPost({
-      ...post,
-      [key]: value,
+    const [post, setPost] = useState({
+        title: "",
+        content: "",
     });
-  };
+    const { userData } = useContext(AppContext);
 
-  const createPost = async () => {
-    if (post.content.length < 5) {
-      return alert("Content must be at least 5 characters long");
-    }
+    const updatePost = (value, key) => {
+        setPost({
+            ...post,
+            [key]: value,
+        });
+    };
 
-    await addPost(userData.handle, post.content);
+    const validateTitle = (title) => {
+        return title.length >= POST_TITLE_MIN_LENGTH && title.length <= POST_TITLE_MAX_LENGTH;
+    };
 
-    setPost({
-      content: "",
-    });
-  };
+    const validateContent = (content) => {
+        return content.length >= POST_CONTENT_MIN_LENGTH && content.length <= POST_CONTENT_MAX_LENGTH;
+    };
 
-  return (
-    <div>
-      <h1>Create post</h1>
-      <label htmlFor="input-content">Content:</label>
-      <br />
-      <textarea
-        value={post.content}
-        onChange={(e) => updatePost(e.target.value, "content")}
-        name="input-content"
-        id="input-content"
-        cols="30"
-        rows="10"
-      ></textarea>
-      <br />
-      <br />
-      <Button onClick={createPost}>Create</Button>
-    </div>
-  );
+    const createPost = async () => {
+        if (!validateTitle(post.title)) {
+            return alert(`Title must be between ${POST_TITLE_MIN_LENGTH} and ${POST_TITLE_MAX_LENGTH} characters long.`);
+        }
+
+        if (!validateContent(post.content)) {
+            return alert(`Content must be between ${POST_CONTENT_MIN_LENGTH} and ${POST_CONTENT_MIN_LENGTH} characters long.`);
+        }
+
+        await addPost(post.title, post.content, userData.handle);
+
+        setPost({
+            title: "",
+            content: "",
+        });
+    };
+
+    return (
+        <div>
+            <h1>Create post</h1>
+            <label htmlFor="input-title">Title:</label>
+            <br />
+            <input
+                type="text"
+                value={post.title}
+                onChange={(e) => updatePost(e.target.value, "title")}
+                name="input-title"
+                id="input-title"
+            />
+            <br />
+            <br />
+            <label htmlFor="input-content">Content:</label>
+            <br />
+            <textarea
+                value={post.content}
+                onChange={(e) => updatePost(e.target.value, "content")}
+                name="input-content"
+                id="input-content"
+                cols="30"
+                rows="10"
+            ></textarea>
+            <br />
+            <br />
+            <Button onClick={createPost}>Create</Button>
+        </div>
+    );
 }

@@ -1,10 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import {
-  getPostById,
-  restorePost,
-  removePost,
-} from "../services/posts.service";
+import { getPostById, restorePost, removePost } from "../services/posts.service";
 import Post from "../components/Post/Post";
 import Comment from "../components/Comments/Comment";
 import { addComment, getAllComments } from "../services/comment.service";
@@ -20,11 +16,21 @@ export default function SinglePost() {
   const { userData } = useContext(AppContext);
 
   useEffect(() => {
-    async function fetchPost() {
-      const fetchedPost = await getPostById(id);
-      setPost(fetchedPost);
-    }
-    fetchPost();
+    return onValue(ref(db, `posts/${id}`), (snapshot) => {
+      const postData = snapshot.val();
+      if (postData) {
+        const likedByArray = postData.likedBy ? Object.keys(postData.likedBy) : [];
+        setPost({
+          ...postData,
+          id,
+          likedBy: likedByArray,
+          createdOn: new Date(postData.createdOn).toString(),
+          comments: postData.comments || [],
+        });
+      } else {
+        setPost(null);
+      }
+    });
   }, [id]);
 
   useEffect(() => {
@@ -37,12 +43,8 @@ export default function SinglePost() {
         const commentsArray = Object.keys(commentsData).map((key) => ({
           id: key,
           ...commentsData[key],
-          likedBy: commentsData[key].likedBy
-            ? Object.keys(commentsData[key].likedBy)
-            : [],
-          createdOn: commentsData[key].createdOn
-            ? new Date(commentsData[key].createdOn).toString()
-            : "",
+          likedBy: commentsData[key].likedBy ? Object.keys(commentsData[key].likedBy) : [],
+          createdOn: commentsData[key].createdOn ? new Date(commentsData[key].createdOn).toString() : "",
         }));
         setComments(commentsArray);
       } else {
@@ -65,14 +67,15 @@ export default function SinglePost() {
     <div>
       <h1>Single Post</h1>
       {post && (
-        <Post
-          post={post}
-          showViewButton={false} 
-          onRemove={() => removePost(post.id) && window.open(`/posts`, "_self")}
-          onRestore={() =>
-            restorePost(post.id) && window.open(`/posts`, "_self")
-          }
-        />
+        <>
+          <Post
+            post={post}
+            showViewButton={false}
+            onRemove={() => removePost(post.id) && window.open(`/posts`, "_self")}
+            onRestore={() => restorePost(post.id) && window.open(`/posts`, "_self")}
+          />
+          <p>Likes: {post.likedBy.length}</p>
+        </>
       )}
       <div>
         <h2>Comments</h2>
@@ -90,5 +93,4 @@ export default function SinglePost() {
       </div>
     </div>
   );
-
 }

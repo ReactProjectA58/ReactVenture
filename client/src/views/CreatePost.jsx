@@ -32,7 +32,7 @@ export default function CreatePost() {
         }
 
         if (!validateContent(post.content)) {
-            return alert(`Content must be between ${POST_CONTENT_MIN_LENGTH} and ${POST_CONTENT_MIN_LENGTH} characters long.`);
+            return alert(`Content must be between ${POST_CONTENT_MIN_LENGTH} and ${POST_CONTENT_MAX_LENGTH} characters long.`);
         }
 
         await addPost(post.title, post.content, userData.handle);

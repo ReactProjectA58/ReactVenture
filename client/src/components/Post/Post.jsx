@@ -90,6 +90,6 @@ Post.propTypes = {
     likedBy: PropTypes.array,
     isDeleted: PropTypes.bool,
     title: PropTypes.string.isRequired,
-    showViewButton: PropTypes.bool.isRequired,
+    showViewButton: PropTypes.bool,
   }),
 };

@@ -8,7 +8,6 @@ import { db } from "../config/firebase-config";
 import { ref, onValue, query, orderByChild, equalTo } from "firebase/database";
 import { AppContext } from "../context/AppContext";
 
-
 export default function SinglePost() {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
@@ -59,6 +58,12 @@ export default function SinglePost() {
       }
     });
   }, [id]);
+
+  const isAdmin = userData && userData.role === "admin";
+
+  const isPostOwner = userData && post && userData.handle === post.author;
+  
+  const isCommentOwner = (comment) => userData && comment && userData.handle === comment.author;
 
   const handleAddComment = async () => {
     if (!userData) {
@@ -125,7 +130,7 @@ export default function SinglePost() {
                 onRestore={() => restorePost(post.id) && window.open(`/posts`, "_self")}
               />
               <p>Likes: {post.likedBy.length}</p>
-              <button onClick={handlePostEdit}>Edit Post</button>
+              {isAdmin || isPostOwner ? <button onClick={handlePostEdit}>Edit Post</button> : null}
             </div>
           )}
         </>
@@ -150,7 +155,7 @@ export default function SinglePost() {
             ) : (
               <div>
                 <Comment comment={comment} />
-                <button onClick={() => handleCommentEdit(comment.id, comment.content)}>Edit Comment</button>
+                {isAdmin || isCommentOwner(comment) ? <button onClick={() => handleCommentEdit(comment.id, comment.content)}>Edit Comment</button> : null}
               </div>
             )}
           </div>

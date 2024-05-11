@@ -1,0 +1,62 @@
+.user-info {
+  width: 100%;
+  height: 100%;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  color: black;
+  border-top-right-radius: 0%;
+  border-bottom-left-radius: 0%;
+  border-top-left-radius: 9%;
+  overflow: hidden;
+}
+
+.outer-border {
+  display: inline-block;
+  width: 20%;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(52, 129, 31);
+  box-sizing: border-box;
+  border-top-left-radius: 9%;
+  height: 225px;
+  width: 275px;
+  overflow: hidden;
+}
+
+p {
+  margin: 0;
+}
+.name {
+  margin-bottom: 5px;
+}
+.name-label {
+  font-weight: bold;
+  color: #333;
+  margin-top: 0;
+}
+
+.username {
+  margin-bottom: 5px;
+}
+.username-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.email {
+  margin-bottom: 5px;
+}
+.email-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.block-user {
+  background-color: #333;
+  padding: 3px;
+}

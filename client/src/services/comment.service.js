@@ -55,3 +55,16 @@ export const dislikeComment = async(commentId, handle) => {
 
     update(ref(db), updateVal);
 };
+
+
+
+export const editComment = async (commentId, updatedContent) => {
+    try {
+      const commentRef = ref(db, `comments/${commentId}`);
+      await update(commentRef, { content: updatedContent });
+      console.log("Comment updated successfully!");
+    } catch (error) {
+      console.error("Error updating comment:", error);
+      throw error;
+    }
+  };

@@ -208,3 +208,14 @@ export const getDeletedPosts = async () => {
     return [];
   }
 };
+
+export const editPost = async (postId, updatedContent) => {
+  try {
+    const postRef = ref(db, `posts/${postId}`);
+    await update(postRef, { content: updatedContent });
+    console.log("Post updated successfully!");
+  } catch (error) {
+    console.error("Error updating post:", error);
+    throw error;
+  }
+};

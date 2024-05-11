@@ -1,17 +1,24 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { getPostById, restorePost, removePost } from "../services/posts.service";
+import { getPostById, restorePost, removePost, editPost } from "../services/posts.service";
 import Post from "../components/Post/Post";
 import Comment from "../components/Comments/Comment";
-import { addComment, getAllComments } from "../services/comment.service";
+import { addComment, getAllComments, editComment } from "../services/comment.service";
 import { db } from "../config/firebase-config";
 import { ref, onValue, query, orderByChild, equalTo } from "firebase/database";
 import { AppContext } from "../context/AppContext";
+
 
 export default function SinglePost() {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newCommentContent, setNewCommentContent] = useState("");
+  const [isEditingPost, setIsEditingPost] = useState(false);
+  const [editedPostContent, setEditedPostContent] = useState("");
+  const [isEditingComment, setIsEditingComment] = useState(false);
+  const [editedCommentId, setEditedCommentId] = useState("");
+  const [editedCommentContent, setEditedCommentContent] = useState("");
+  
   const { id } = useParams();
   const { userData } = useContext(AppContext);
 
@@ -63,18 +70,64 @@ export default function SinglePost() {
     setNewCommentContent("");
   };
 
+  const handlePostEdit = () => {
+    setIsEditingPost(true);
+    setEditedPostContent(post.content);
+  };
+
+  const handlePostUpdate = async () => {
+    try {
+      await editPost(post.id, editedPostContent);
+      setPost({ ...post, content: editedPostContent });
+      setIsEditingPost(false);
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
+  };
+
+  const handleCommentEdit = (commentId, commentContent) => {
+    setIsEditingComment(true);
+    setEditedCommentId(commentId);
+    setEditedCommentContent(commentContent);
+  };
+
+  const handleCommentUpdate = async () => {
+    try {
+      await editComment(editedCommentId, editedCommentContent);
+      const updatedComments = comments.map((comment) =>
+        comment.id === editedCommentId ? { ...comment, content: editedCommentContent } : comment
+      );
+      setComments(updatedComments);
+      setIsEditingComment(false);
+      setEditedCommentId("");
+      setEditedCommentContent("");
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
+  };
+
   return (
     <div>
       <h1>Single Post</h1>
       {post && (
         <>
-          <Post
-            post={post}
-            showViewButton={false}
-            onRemove={() => removePost(post.id) && window.open(`/posts`, "_self")}
-            onRestore={() => restorePost(post.id) && window.open(`/posts`, "_self")}
-          />
-          <p>Likes: {post.likedBy.length}</p>
+          {isEditingPost ? (
+            <div>
+              <textarea value={editedPostContent} onChange={(e) => setEditedPostContent(e.target.value)} />
+              <button onClick={handlePostUpdate}>Save</button>
+            </div>
+          ) : (
+            <div>
+              <Post
+                post={post}
+                showViewButton={false}
+                onRemove={() => removePost(post.id) && window.open(`/posts`, "_self")}
+                onRestore={() => restorePost(post.id) && window.open(`/posts`, "_self")}
+              />
+              <p>Likes: {post.likedBy.length}</p>
+              <button onClick={handlePostEdit}>Edit Post</button>
+            </div>
+          )}
         </>
       )}
       <div>
@@ -88,7 +141,19 @@ export default function SinglePost() {
         <button onClick={handleAddComment}>Post Comment</button>
         {/* Display comments */}
         {comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
+          <div key={comment.id}>
+            {isEditingComment && editedCommentId === comment.id ? (
+              <div>
+                <textarea value={editedCommentContent} onChange={(e) => setEditedCommentContent(e.target.value)} />
+                <button onClick={handleCommentUpdate}>Save</button>
+              </div>
+            ) : (
+              <div>
+                <Comment comment={comment} />
+                <button onClick={() => handleCommentEdit(comment.id, comment.content)}>Edit Comment</button>
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>

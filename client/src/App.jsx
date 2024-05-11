@@ -51,7 +51,14 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/posts" element={<AllPosts />} />
+            <Route
+              path="/posts"
+              element={
+                <Authenticated>
+                  <AllPosts />
+                </Authenticated>
+              }
+            />
             <Route
               path="/posts/:id"
               element={

@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useEffect, useState } from "react";
 import {
   getAllPosts,
@@ -8,7 +9,6 @@ import Post from "../components/Post/Post";
 import { useSearchParams } from "react-router-dom";
 import { ref, onChildChanged } from "firebase/database";
 import { db } from "../config/firebase-config";
-import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
 export default function AllPosts() {
@@ -62,6 +62,12 @@ export default function AllPosts() {
     setDeletedPosts(deletedPosts.filter((post) => post.id !== postId));
   };
 
+
+  const totalLikesCount = posts.reduce(
+    (total, post) => total + (post.likedBy ? post.likedBy.length : 0),
+    0
+  );
+
   return (
     <div>
       <h1>All posts</h1>
@@ -79,11 +85,10 @@ export default function AllPosts() {
             post={post}
             onRemove={() => userData.isAdmin && handleRemovePost(post.id)}
             showViewButton={true}
+            likesCount={post.likedBy ? post.likedBy.length : 0}
           />
-          Likes: {post.likedBy ? post.likedBy.length : 0}
         </div>
       ))}
-
     </div>
   );
 }

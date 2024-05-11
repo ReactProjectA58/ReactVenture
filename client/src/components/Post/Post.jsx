@@ -59,6 +59,8 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
         <button onClick={like}>Like</button>
       )}
 
+      <p>Likes: {post.likedBy.length}</p>
+
       {isPostDeleted && isAdmin && post.isDeleted && (
         <button type="restore-but" onClick={restore}>
           Restore post

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { searchUsers } from "../services/admin.service";
+import SearchedUser from "../components/SearchedUsers/SearchedUser";
 
 export default function UserSearch() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -42,14 +43,19 @@ export default function UserSearch() {
       )}
 
       <div>
-        <ul>
-          {searchResults.map((user) => (
-            <li key={user.id}>
-              <div>{user.handle}</div>
-              <div>{user.email}</div>
-            </li>
-          ))}
-        </ul>
+        {searchResults.map((user, index) => (
+          <SearchedUser
+            key={user.id}
+            user={user}
+            styleType={
+              index === 0
+                ? "alternate-first"
+                : index === searchResults.length - 1
+                ? "alternate-last"
+                : "default"
+            }
+          />
+        ))}
       </div>
     </div>
   );

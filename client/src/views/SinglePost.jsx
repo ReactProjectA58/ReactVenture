@@ -129,8 +129,7 @@ export default function SinglePost() {
                 onRemove={() => removePost(post.id) && window.open(`/posts`, "_self")}
                 onRestore={() => restorePost(post.id) && window.open(`/posts`, "_self")}
               />
-              <p>Likes: {post.likedBy.length}</p>
-              {isAdmin || isPostOwner ? <button onClick={handlePostEdit}>Edit Post</button> : null}
+              {(isAdmin || isPostOwner) && <button onClick={handlePostEdit}>Edit Post</button>}
             </div>
           )}
         </>
@@ -155,7 +154,7 @@ export default function SinglePost() {
             ) : (
               <div>
                 <Comment comment={comment} />
-                {isAdmin || isCommentOwner(comment) ? <button onClick={() => handleCommentEdit(comment.id, comment.content)}>Edit Comment</button> : null}
+                {(isAdmin || isCommentOwner(comment)) && <button onClick={() => handleCommentEdit(comment.id, comment.content)}>Edit Comment</button>}
               </div>
             )}
           </div>
@@ -163,4 +162,5 @@ export default function SinglePost() {
       </div>
     </div>
   );
+  
 }

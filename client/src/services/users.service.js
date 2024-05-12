@@ -29,6 +29,28 @@ export const getUserData = (uid) => {
   return get(query(ref(db, "users"), orderByChild("uid"), equalTo(uid)));
 };
 
+export const editPost = async (postId, updatedContent) => {
+  try {
+    const postRef = ref(db, `posts/${postId}`);
+    await update(postRef, { content: updatedContent });
+    console.log("Post updated successfully!");
+  } catch (error) {
+    console.error("Error updating post:", error);
+    throw error;
+  }
+};
+
+export const editNames = async (handle, newFirstName, newLastName) => {
+  try {
+    const userRef = ref(db, `users/${handle}`);
+    await update(userRef, { firstName: newFirstName, lastName: newLastName });
+    console.log("Names updated successfully!");
+  } catch (error) {
+    console.error("Error updating names:", error);
+    throw error;
+  }
+};
+
 // export const updateUserAdminStatus = (handle, isAdmin) => {
 //   return update(ref(db, `users/${handle}`), { isAdmin: isAdmin });
 // };

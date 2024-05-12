@@ -82,7 +82,10 @@ export default function AllPosts() {
         <div key={post.id}>
           <Post
             post={post}
-            onRemove={() => userData.isAdmin && handleRemovePost(post.id)}
+            onRemove={() =>
+              (userData.isAdmin || userData.handle === post.author) &&
+              handleRemovePost(post.id)
+            }
             showViewButton={true}
             likesCount={post.likedBy ? post.likedBy.length : 0}
           />

@@ -59,7 +59,7 @@ export default function SinglePost() {
     });
   }, [id]);
 
-  const isAdmin = userData && userData.role === "admin";
+const isAdmin = userData && userData.isAdmin === true;
 
   const isPostOwner = userData && post && userData.handle === post.author;
   

@@ -42,6 +42,8 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
 
   const isAdmin = userData && userData.isAdmin;
 
+  const isAuthor = userData && userData.handle === post.author;
+
   return (
     <div className="outer-container">
       <div className="inner-container">
@@ -72,7 +74,7 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
               width="26"
               height="26"
               fill="currentColor"
-              class="bi bi-hand-thumbs-up"
+              className="bi bi-hand-thumbs-up"
               viewBox="0 0 16 16"
               onClick={like}
             >
@@ -86,11 +88,12 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
             </button>
           )}
 
-          {!isPostDeleted && isAdmin && !post.isDeleted && (
-            <button className="remove-button" onClick={remove}>
-              Remove post
-            </button>
-          )}
+          {!isPostDeleted &&
+            ((isAdmin && !post.isDeleted) || (isAuthor && !post.isDeleted)) && (
+              <button className="remove-button" onClick={remove}>
+                Remove post
+              </button>
+            )}
 
           {showViewButton && (
             <Link to={`/posts/${post.id}`} className="post-link">

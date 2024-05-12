@@ -1,6 +1,61 @@
-.post {
+.outer-container {
+  display: inline-block;
+  width: 20%;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(52, 129, 31);
+  box-sizing: border-box;
+  height: 225px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.inner-container {
+  width: 100%;
+  height: 100%;
+  margin: 10px;
   padding: 10px;
   border: 1px solid rgb(255, 255, 255);
   border-radius: 5px;
-  margin: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  color: black;
+  border-top-right-radius: 0%;
+  border-bottom-left-radius: 0%;
+  overflow: hidden;
+}
+
+.post-title {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.post-info > span {
+  font-weight: bold;
+}
+
+.post-info {
+  margin-top: 30px;
+}
+
+.post-likes {
+  font-weight: bold;
+
+  margin-top: 15px;
+  margin-bottom: -5px;
+  margin-left: 10px;
+}
+
+.remove-button,
+.restore-button {
+  background-color: #333;
+  padding: 3px;
+  margin-right: 5px;
+}
+
+.bi.bi-hand-thumbs-up,
+.bi.bi-hand-thumbs-up-fill {
+  margin-right: 10px;
+  margin-bottom: 5px;
 }

@@ -62,7 +62,6 @@ export default function AllPosts() {
     setDeletedPosts(deletedPosts.filter((post) => post.id !== postId));
   };
 
-
   const totalLikesCount = posts.reduce(
     (total, post) => total + (post.likedBy ? post.likedBy.length : 0),
     0

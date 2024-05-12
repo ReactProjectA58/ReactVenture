@@ -93,8 +93,8 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
           )}
 
           {showViewButton && (
-            <Link to={`/posts/${post.id}`} className="view-button">
-              View
+            <Link to={`/posts/${post.id}`} className="post-link">
+              <button className="view-button">View</button>
             </Link>
           )}
         </div>

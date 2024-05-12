@@ -6,3 +6,5 @@ export const POST_TITLE_MIN_LENGTH = 1;
 export const POST_TITLE_MAX_LENGTH = 64;
 export const POST_CONTENT_MIN_LENGTH = 1;
 export const POST_CONTENT_MAX_LENGTH = 8192;
+export const COMMENT_MIN_LENGTH = 1;
+export const COMMENT_MAX_LENGTH = 4096;

@@ -19,6 +19,7 @@ export default function SinglePost() {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newCommentContent, setNewCommentContent] = useState("");
+  const [commentErrorMessage, setCommentErrorMessage] = useState("");
   const { userData } = useContext(AppContext);
   const { id } = useParams();
 
@@ -81,7 +82,7 @@ export default function SinglePost() {
     }
 
     if (newCommentContent.length < COMMENT_MIN_LENGTH || newCommentContent.length > COMMENT_MAX_LENGTH) {
-      alert(`Comment length must be between ${COMMENT_MIN_LENGTH} and ${COMMENT_MAX_LENGTH} characters.`);
+      setCommentErrorMessage(`Comment length must be between ${COMMENT_MIN_LENGTH} and ${COMMENT_MAX_LENGTH} characters.`);
       return;
     }
 
@@ -89,6 +90,7 @@ export default function SinglePost() {
     const newComments = await getAllComments(id);
     setComments(newComments);
     setNewCommentContent("");
+    setCommentErrorMessage("");
   };
 
   return (
@@ -114,10 +116,16 @@ export default function SinglePost() {
         {/* Input field for adding new comment */}
         <textarea
           value={newCommentContent}
-          onChange={(e) => setNewCommentContent(e.target.value)}
+          onChange={(e) => {
+            setNewCommentContent(e.target.value);
+            setCommentErrorMessage("");
+          }}
           placeholder="Add a comment..."
         />
         <button onClick={handleAddComment}>Post Comment</button>
+        {commentErrorMessage && (
+          <p style={{ color: "red" }}>{commentErrorMessage}</p>
+        )}
         {/* Display comments */}
         {comments.map((comment) => (
           <div key={comment.id}>

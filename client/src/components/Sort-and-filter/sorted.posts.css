@@ -1,0 +1,31 @@
+.dropdown-item {
+    width: 90%;
+  }
+  
+  .dropdown-item:active {
+    background-color: gainsboro;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navigation-links {
+    display: flex;
+  }
+  
+  .user-section {
+    display: flex;
+    align-items: center;
+  }
+  
+  .admin-panel {
+    margin-left: 10px;
+  }
+  
+  .user-welcome {
+    margin-right: 10px;
+  }
+  

@@ -59,32 +59,117 @@ export const getPostById = async (id) => {
   };
 };
 
+export const sortPostsByAuthor = async () => {
+  const postsSnapshot = await get(ref(db, "posts"));
+  const posts = Object.entries(postsSnapshot.val())
+    .map(([key, value]) => ({
+      ...value,
+      id: key,
+    }));
+
+  // Check if posts is an array
+  if (!Array.isArray(posts)) {
+    console.error("Posts data is not in the expected format.");
+    return [];
+  }
+
+  // Sort posts by author
+  posts.sort((a, b) => a.author.localeCompare(b.author));
+  
+  // console.log(posts.reverse())
+  return posts.reverse();
+};
+
+
+export const sortPostsByDate = async () => {
+  const postsSnapshot = await get(ref(db, "posts"));
+  
+  const posts = Object.entries(postsSnapshot.val())
+    .map(([key, value]) => ({
+      ...value,
+      id: key,
+    }));
+
+  posts.sort((a, b) => b.createdOn - a.createdOn);
+
+  // console.log(posts.reverse())
+  return posts.reverse();
+};
+
+
+export const filterPostsByLikes = async () => {
+  const postsSnapshot = await get(ref(db, "posts"));
+  const posts = Object.entries(postsSnapshot.val())
+    .map(([key, value]) => ({
+      ...value,
+      id: key,
+    }));
+
+  // Check if posts is an array
+  if (!Array.isArray(posts)) {
+    console.error("Posts data is not in the expected format.");
+    return [];
+  }
+
+  // Filter posts with likes
+  const likedPosts = posts.filter(post => post.likedBy && Object.keys(post.likedBy).length > 0);
+
+  // console.log(likedPosts.reverse());
+  return likedPosts.reverse();
+};
+
+
+export const filterPostsByComments = async () => {
+
+  const postsSnapshot = await get(ref(db, "posts"));
+  const posts = Object.entries(postsSnapshot.val())
+    .map(([key, value]) => ({
+      ...value,
+      id: key,
+    }));
+
+  const commentsSnapshot = await get(ref(db, "comments"));
+  const comments = Object.entries(commentsSnapshot.val())
+    .map(([key, value]) => ({
+      ...value,
+      id: key,
+    }));
+
+  // Find posts with associated comments
+  const postsWithComments = posts.filter(post =>
+    comments.some(comment => comment.postId === post.id)
+  );
+  // console.log(postsWithComments.reverse());
+  return postsWithComments.reverse();
+};
+
 export const getTopPosts = async () => {
   const postsRef = ref(db, 'posts');
   const snapshot = await get(postsRef);
 
   const postsWithComments = [];
 
-  snapshot.forEach((childSnapshot) => {
-      const post = childSnapshot.val();
-      const postId = childSnapshot.key;
+  // Iterate through all the comments to determine the number of comments for each post
+  const commentsSnapshot = await get(ref(db, 'comments'));
+  const commentsData = commentsSnapshot.val();
 
-      // Check if the post has comments
-      if (post.comments) {
-          const commentsCount = Object.keys(post.comments).length;
-          postsWithComments.push({ id: postId, commentsCount, ...post });
-      }
+  snapshot.forEach((childSnapshot) => {
+    const postId = childSnapshot.key;
+    const post = childSnapshot.val();
+
+    // Check if the post has comments
+    const commentsCount = commentsData ? Object.values(commentsData).filter(comment => comment.postId === postId).length : 0;
+
+    postsWithComments.push({ id: postId, commentsCount, ...post });
   });
 
+  // Sort the posts by the number of comments in descending order
   postsWithComments.sort((a, b) => b.commentsCount - a.commentsCount);
 
-  if (postsWithComments.length <= 10) {
-      return postsWithComments;
-  } else {
-      const topPosts = postsWithComments.slice(0, 10);    
-      return topPosts;
-  }
+  // Return the top 10 posts with the most comments
+  return postsWithComments.slice(0, 10);
 };
+
 
 
 export const getRecentPosts = async () => {

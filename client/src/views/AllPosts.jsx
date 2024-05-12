@@ -11,6 +11,7 @@ import { ref, onChildChanged } from "firebase/database";
 import { db } from "../config/firebase-config";
 import { AppContext } from "../context/AppContext";
 
+
 export default function AllPosts() {
   const [posts, setPosts] = useState([]);
   const [deletedPosts, setDeletedPosts] = useState([]);
@@ -69,6 +70,7 @@ export default function AllPosts() {
 
   return (
     <div>
+
       <h1>All posts</h1>
       <label htmlFor="search">Search</label>
       <input

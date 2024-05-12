@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { getTopPosts, getRecentPosts, getNumberOfPosts, getNumberOfUsers } from "../services/posts.service.js";
-import Post from "../components/Post/Post";
+import TopPosts from "./TopPosts.jsx";
+import RecentPosts from "./MostRecentPosts.jsx";
+// import { filterPostsByComments, filterPostsByLikes } from "../services/posts.service.js";
+// import { sortPostsByDate, sortPostsByAuthor } from "../services/posts.service.js";
+
+
 
 export default function Home() {
 
@@ -26,10 +31,13 @@ useEffect(() => {
     getNumberOfPosts().then(count => setNumberOfPosts(count));
 }, []);
 
+// {sortPostsByAuthor()}
+// {sortPostsByDate()}
+// {filterPostsByComments()}
+// {filterPostsByLikes()}
  return (
    <div>
      <h1>Welcome to the ReactVenture Forum</h1>
-     
      {/* Core features */}
      <div>
        <br></br>
@@ -57,7 +65,7 @@ useEffect(() => {
      {/* <div>
         <h2>Recent Posts</h2>
             {recentPosts.map(post => (
-            <Post key={post.id} post={post} />
+            <Post key={post.id} post={{ ...post, createdOn: post.createdOn.toString() }} />
         ))}
     </div> */}
     {/* <div>
@@ -66,8 +74,22 @@ useEffect(() => {
             <Post key={post.id} post={post} />
         ))}
     </div> */}
-   </div>
- );
+
+
+
+
+
+
+<div>
+    <RecentPosts />
+</div> 
+<div>
+    <TopPosts />
+</div> 
+
+    
+    </div>
+);
 }
 
 

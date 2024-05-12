@@ -19,6 +19,8 @@ import { auth } from "./config/firebase-config.js";
 import DeletedPosts from "./views/DeletedPosts"; // Import the DeletedPosts component
 import UserSearch from "./views/UserSearch.jsx";
 import ProfilePage from "./views/UserProfile.jsx";
+import UserList from "./views/UserProfile.jsx";
+import UserPage from "./views/ProfilePage.jsx";
 
 function App() {
   const [appState, setAppState] = useState({
@@ -95,10 +97,19 @@ function App() {
               path="/my-profile"
               element={
                 <Authenticated>
-                  <ProfilePage />
+                  <UserList />
                 </Authenticated>
               }
             />
+            <Route
+              path="/user"
+              element={
+                <Authenticated>
+                  <UserPage />
+                </Authenticated>
+              }
+            />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />

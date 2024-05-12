@@ -56,7 +56,13 @@ p {
   color: #333;
 }
 
-.block-user {
+.block-button {
   background-color: #333;
+  padding: 3px;
+  margin-right: 5px;
+}
+
+.profile-button {
+  background-color: green;
   padding: 3px;
 }

@@ -43,18 +43,8 @@ export default function UserSearch() {
       )}
 
       <div>
-        {searchResults.map((user, index) => (
-          <SearchedUser
-            key={user.id}
-            user={user}
-            styleType={
-              index === 0
-                ? "alternate-first"
-                : index === searchResults.length - 1
-                ? "alternate-last"
-                : "default"
-            }
-          />
+        {searchResults.map((user) => (
+          <SearchedUser key={user.id} user={user} />
         ))}
       </div>
     </div>

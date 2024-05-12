@@ -1,44 +1,98 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes for prop validation
-import { editPost } from '../services/post.services';
-import { editComment } from '../services/comment.services';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { editPost, removePost } from "../services/posts.service";
+import {editComment } from "../services/comment.service";
 
-const EditContent = ({ type, id, currentContent, onCancel, onUpdate }) => {
-  const [updatedContent, setUpdatedContent] = useState(currentContent);
+export function EditPost({ post }) {
+  const [isEditingPost, setIsEditingPost] = useState(false);
+  const [editedPostContent, setEditedPostContent] = useState(post.content);
 
-  const handleContentChange = (e) => {
-    setUpdatedContent(e.target.value);
+  const handlePostEdit = () => {
+    setIsEditingPost(true);
+    setEditedPostContent(post.content);
   };
 
-  const handleSubmit = async () => {
+  const handlePostUpdate = async () => {
     try {
-      if (type === 'post') {
-        await editPost(id, updatedContent);
-      } else if (type === 'comment') {
-        await editComment(id, updatedContent);
-      }
-      onUpdate();
+      await editPost(post.id, editedPostContent);
+      post.content = editedPostContent;
+      setIsEditingPost(false);
     } catch (error) {
-      console.error('Error editing content:', error);
+      console.error("Error updating post:", error);
     }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditingPost(false);
+    setEditedPostContent(post.content);
   };
 
   return (
     <div>
-      <textarea value={updatedContent} onChange={handleContentChange} />
-      <button onClick={handleSubmit}>Save</button>
-      <button onClick={onCancel}>Cancel</button>
+      {isEditingPost ? (
+        <div>
+          <textarea value={editedPostContent} onChange={(e) => setEditedPostContent(e.target.value)} />
+          <button onClick={handlePostUpdate}>Save</button>
+          <button onClick={handleCancelEdit}>Cancel</button>
+        </div>
+      ) : (
+        <div>
+          <button onClick={handlePostEdit}>Edit Post</button>
+        </div>
+      )}
     </div>
   );
+}
+
+EditPost.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
-// Prop validation
-EditContent.propTypes = {
-  type: PropTypes.oneOf(['post', 'comment']).isRequired,
-  id: PropTypes.string.isRequired,
-  currentContent: PropTypes.string.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
-};
+export function EditComment({ comment }) {
+  const [isEditingComment, setIsEditingComment] = useState(false);
+  const [editedCommentContent, setEditedCommentContent] = useState(comment.content);
 
-export default EditContent;
+  const handleCommentEdit = () => {
+    setIsEditingComment(true);
+    setEditedCommentContent(comment.content);
+  };
+
+  const handleCommentUpdate = async () => {
+    try {
+      await editComment(comment.id, editedCommentContent);
+      comment.content = editedCommentContent;
+      setIsEditingComment(false);
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditingComment(false);
+    setEditedCommentContent(comment.content);
+  };
+
+  return (
+    <div>
+      {isEditingComment ? (
+        <div>
+          <textarea value={editedCommentContent} onChange={(e) => setEditedCommentContent(e.target.value)} />
+          <button onClick={handleCommentUpdate}>Save</button>
+          <button onClick={handleCancelEdit}>Cancel</button>
+        </div>
+      ) : (
+        <button onClick={handleCommentEdit}>Edit Comment</button>
+      )}
+    </div>
+  );
+}
+
+EditComment.propTypes = {
+  comment: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+  }).isRequired,
+};

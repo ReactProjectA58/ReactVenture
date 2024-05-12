@@ -1,16 +1,52 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { AppContext } from "../context/AppContext";
+import { editNames } from "../services/users.service";
 
 export default function ProfilePage() {
   const { userData } = useContext(AppContext);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("New First Name:", newFirstName);
-    console.log("New Last Name:", newLastName);
+
+    if (
+      newFirstName.length < 4 ||
+      newFirstName.length > 32 ||
+      newFirstName.trim() === "" ||
+      !newFirstName.match(/^[A-Z][a-zA-Z]*$/)
+    ) {
+      setError(
+        "First name must be between 4 and 32 characters, cannot be empty, and must start with a capital letter."
+      );
+      return;
+    }
+    if (
+      newLastName.length < 4 ||
+      newLastName.length > 32 ||
+      newLastName.trim() === "" ||
+      !newLastName.match(/^[A-Z][a-zA-Z]*$/)
+    ) {
+      setError(
+        "Last name must be between 4 and 32 characters, cannot be empty, and must start with a capital letter."
+      );
+      return;
+    }
+
+    try {
+      await editNames(userData.handle, newFirstName, newLastName);
+      userData.firstName = newFirstName;
+      userData.lastName = newLastName;
+      setNewFirstName("");
+      setNewLastName("");
+      setError("");
+      setSuccessMessage("Name updated successfully!");
+    } catch (error) {
+      setError("Failed to update names. Please try again.");
+      console.error("Error updating names:", error);
+    }
   };
 
   return (
@@ -42,6 +78,7 @@ export default function ProfilePage() {
         />
         <button type="submit">Update Name</button>
         {error && <p>{error}</p>}
+        {successMessage && <p>{successMessage}</p>}
       </form>
     </div>
   );

@@ -21,6 +21,7 @@ export const createUserHandle = (firstName, lastName, handle, uid, email) => {
     uid: uid,
     email: email,
     isAdmin: false,
+    isBlocked: false,
     createdOn: new Date(),
   });
 };
@@ -51,8 +52,17 @@ export const editNames = async (handle, newFirstName, newLastName) => {
   }
 };
 
-// export const updateUserAdminStatus = (handle, isAdmin) => {
-//   return update(ref(db, `users/${handle}`), { isAdmin: isAdmin });
+// export const updateBlockStatus = (handle, isBlocked) => {
+//   const userRef = ref(db, `users/${handle}`);
+//   return update(userRef, { isBlocked: isBlocked });
 // };
 
-// updateUserAdminStatus("admin2024", true);
+export const blockUser = async (handle) => {
+  const userRef = ref(db, `users/${handle}`);
+  return update(userRef, { isBlocked: true });
+};
+
+export const unblockUser = async (handle) => {
+  const userRef = ref(db, `users/${handle}`);
+  return update(userRef, { isBlocked: false });
+};

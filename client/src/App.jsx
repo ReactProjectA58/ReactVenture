@@ -102,7 +102,7 @@ function App() {
               }
             />
             <Route
-              path="/user"
+              path="/user/:handle"
               element={
                 <Authenticated>
                   <UserPage />

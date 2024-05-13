@@ -5,19 +5,16 @@ import Post from "../components/Post/Post";
 export default function RecentPosts() {
   const [recentPosts, setRecentPosts] = useState([]);
 
-useEffect(() => {
+  useEffect(() => {
     getRecentPosts().then((posts) => setRecentPosts(posts));
-}, []);
+  }, []);
 
-return (
+  return (
     <div>
       <h2>Recent Posts</h2>
       {recentPosts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post.id} post={post} likeCount={post.likedBy.length} /> // Pass the like count
       ))}
     </div>
   );
 }
-
-
-

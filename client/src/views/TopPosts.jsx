@@ -12,19 +12,11 @@ export default function TopPosts() {
 
   return (
     <div>
-        <hr></hr>
+      <hr></hr>
       <h2>Top Posts</h2>
       {topPosts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post.id} post={post} likeCount={post.likedBy.length} /> 
       ))}
     </div>
   );
 }
-
-
-// TopPosts.propTypes = {
-//     comment: PropTypes.shape({
-//       id: PropTypes.string.isRequired,
-//       content: PropTypes.string.isRequired,
-//     }).isRequired,
-//   };

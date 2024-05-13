@@ -1,17 +1,28 @@
 import { NavLink } from "react-router-dom";
 import Button from "./Button";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { logoutUser } from "../services/auth.service";
 import AdminPanelDropdown from "./AdminPanel/AdminPanel";
 
 export default function Header() {
-  const { user, userData, setAppState } = useContext(AppContext);
+  const { user, userData } = useContext(AppContext);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (userData) {
+      setLoading(false);
+    }
+  }, [userData]);
 
   const logout = async () => {
     await logoutUser();
     setAppState({ user: null, userData: null });
   };
+
+  if (loading) {
+    return `loading`;
+  }
 
   return (
     <header className="header-container">

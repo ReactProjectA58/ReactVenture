@@ -2,11 +2,6 @@ import { useState, useEffect } from "react";
 import { getTopPosts, getRecentPosts, getNumberOfPosts, getNumberOfUsers } from "../services/posts.service.js";
 import TopPosts from "./TopPosts.jsx";
 import RecentPosts from "./MostRecentPosts.jsx";
-// import { filterPostsByComments, filterPostsByLikes } from "../services/posts.service.js";
-// import { sortPostsByDate, sortPostsByAuthor } from "../services/posts.service.js";
-
-
-
 export default function Home() {
 
 const [topPosts, setTopPosts] = useState([]);
@@ -60,25 +55,6 @@ useEffect(() => {
        <br></br>
        <br></br>
      </div>
-
-     {/* Lists of top 10 most commented and recently created posts */}
-     {/* <div>
-        <h2>Recent Posts</h2>
-            {recentPosts.map(post => (
-            <Post key={post.id} post={{ ...post, createdOn: post.createdOn.toString() }} />
-        ))}
-    </div> */}
-    {/* <div>
-        <h2>Top Posts</h2>
-            {topPosts.map(post => (
-            <Post key={post.id} post={post} />
-        ))}
-    </div> */}
-
-
-
-
-
 
 <div>
     <RecentPosts />

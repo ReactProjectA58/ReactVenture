@@ -13,14 +13,16 @@ import { AppContext } from "../../context/AppContext";
 
 export default function Post({ post, showViewButton, onRemove, onRestore }) {
   const { user, userData } = useContext(AppContext);
-
   const [isLikedByUser, setIsLikedByUser] = useState(
     Array.isArray(post.likedBy) && post.likedBy.includes(userData?.handle)
   );
-
   const [isPostDeleted, setIsPostDeleted] = useState(post.isDeleted);
 
   const like = () => {
+    if (!userData) {
+      window.location.href = '/register';
+      return;
+    }
     likePost(post.id, userData.handle);
     setIsLikedByUser(true);
   };
@@ -41,7 +43,6 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
   };
 
   const isAdmin = userData && userData.isAdmin;
-
   const isAuthor = userData && userData.handle === post.author;
 
   return (

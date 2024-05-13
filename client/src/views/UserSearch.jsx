@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { searchUsers } from "../services/admin.service";
 import SearchedUser from "../components/SearchedUsers/SearchedUser";
+import PropTypes from "prop-types";
 
 export default function UserSearch() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,4 +50,13 @@ export default function UserSearch() {
       </div>
     </div>
   );
+
+  
 }
+
+SearchedUser.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired, // Change this to string
+    // other prop types
+  }).isRequired,
+};

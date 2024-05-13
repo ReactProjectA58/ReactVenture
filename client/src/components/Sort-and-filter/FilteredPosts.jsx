@@ -14,7 +14,7 @@ export default function FilterPostsPanelDropdown() {
       </button>
       <ul className="dropdown-menu" style={{}}>
         <li>
-          <Link className="dropdown-item" to="/by-comments">
+          <Link className="dropdown-item" to="/filtered-by-comments">
             Comments
           </Link>
         </li>

@@ -21,6 +21,10 @@ import UserSearch from "./views/UserSearch.jsx";
 import ProfilePage from "./views/UserProfile.jsx";
 import UserList from "./views/UserProfile.jsx";
 import UserPage from "./views/ProfilePage.jsx";
+import FilteredByComments from "./components/Sort-and-filter/FilteredByComments.jsx";
+import FilteredByLikes from "./components/Sort-and-filter/FilteredByLikes.jsx";
+import SortedByAuthor from "./components/Sort-and-filter/SortedByAuthor.jsx";
+import SortedByDate from "./components/Sort-and-filter/SortedByDate.jsx";
 
 function App() {
   const [appState, setAppState] = useState({
@@ -106,6 +110,38 @@ function App() {
               element={
                 <Authenticated>
                   <UserPage />
+                </Authenticated>
+              }
+            />
+            <Route
+              path="/filtered-by-comments"
+              element={
+                <Authenticated>
+                  <FilteredByComments />
+                </Authenticated>
+              }
+            />
+            <Route
+              path="/filtered-by-likes"
+              element={
+                <Authenticated>
+                  <FilteredByLikes />
+                </Authenticated>
+              }
+            />
+            <Route
+              path="/sorted-by-author"
+              element={
+                <Authenticated>
+                  <SortedByAuthor />
+                </Authenticated>
+              }
+            />
+            <Route
+              path="/sorted-by-date"
+              element={
+                <Authenticated>
+                  <SortedByDate />
                 </Authenticated>
               }
             />

@@ -93,7 +93,7 @@ export const sortPostsByDate = async () => {
   posts.sort((a, b) => b.createdOn - a.createdOn);
 
   // console.log(posts.reverse())
-  return posts.reverse();
+  return posts;
 };
 
 

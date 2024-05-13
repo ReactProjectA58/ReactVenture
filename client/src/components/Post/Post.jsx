@@ -52,7 +52,14 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
           <p className="post-content">{post.content}</p>
           <p className="post-info">
             by <span className="username">{post.author}</span>,{" "}
-            {new Date(post.createdOn).toLocaleDateString("bg-BG").toString()}
+            {new Date(post.createdOn).toLocaleString("bg-BG", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            }).toString()}
+
           </p>
           {/* <p className="post-likes">{post.likedBy.length}</p> */}
           <p className="post-likes">{post.likedBy?.length}</p>

@@ -14,12 +14,12 @@ export default function SortPostsPanelDropdown() {
       </button>
       <ul className="dropdown-menu" style={{}}>
         <li>
-          <Link className="dropdown-item" to="/by-author">
+          <Link className="dropdown-item" to="/sorted-by-author">
             Author
           </Link>
         </li>
         <li>
-          <Link className="dropdown-item" to="/by-date">
+          <Link className="dropdown-item" to="/sorted-by-date">
             Date
           </Link>
         </li>

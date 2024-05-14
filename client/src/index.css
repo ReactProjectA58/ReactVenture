@@ -72,5 +72,5 @@ button:focus-visible {
 }
 
 .nav-link.active {
-  color: black;
+  color: green;
 }

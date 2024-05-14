@@ -75,7 +75,7 @@ export default function UserProfile() {
     <div className="user-profile-container">
       <h1>User Profile</h1>
       {userData && (
-        <div className="user-data-container outer-border">
+        <div className="user-data-container outer-border-container">
           <div className="user-info-container">
             <div className="profile-info">
               {!isEditing && (

@@ -81,6 +81,9 @@ export default function CreatePost() {
               onChange={(e) => updatePost(e.target.value, "title")}
               name="input-title"
               id="input-title"
+              style={{
+                boxShadow: "inset 0px 0px 5px rgba(0, 0, 0, 0.5)",
+              }}
             />
           </div>
         </div>
@@ -98,6 +101,9 @@ export default function CreatePost() {
             id="input-content"
             cols="30"
             rows="10"
+            style={{
+              boxShadow: "inset 0px 0px 5px rgba(0, 0, 0, 0.5)",
+            }}
           ></textarea>
         </div>
 

@@ -1,12 +1,14 @@
 .title-input-style {
-  border-color: green;
+  border-color: rgb(81, 126, 51);
+
   background-color: transparent;
   color: black;
   width: 500px;
 }
 
 .comment-field-style {
-  border-color: green;
+  border-color: rgb(81, 126, 51);
+
   background-color: transparent;
   border-width: 2px;
   border-style: outset;
@@ -19,7 +21,7 @@
   margin: 10px;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgb(52, 129, 31);
+  background-color: rgb(147, 197, 114);
   box-sizing: border-box;
   height: auto;
   width: 100%;
@@ -33,7 +35,7 @@
   padding: 10px;
   border: 1px solid rgb(255, 255, 255);
   border-radius: 5px;
-  background-color: white;
+  background-color: rgb(214, 224, 215);
   box-sizing: border-box;
   color: black;
   border-top-right-radius: 0%;
@@ -45,39 +47,29 @@
 .create-post-header {
   font-size: small;
   margin-bottom: 4px;
-  color: transparent;
-  text-shadow: 0 0 0 green, -1px -1px 2px black, 1px 1px 2px black,
-    1px -1px 2px black, -1px 1px 2px black;
+  color: rgb(81, 126, 51);
 }
 
 .post-title {
   font-size: 25px;
   margin-bottom: 4px;
-  color: transparent;
-  text-shadow: 0 0 0 green, -1px -1px 2px black, 1px 1px 2px black,
-    1px -1px 2px black, -1px 1px 2px black;
+  color: rgb(81, 126, 51);
 }
 
 .post-content {
   font-weight: 700;
   font-size: 18px;
-  margin-bottom: 4px;
-  color: transparent;
-  text-shadow: 0 0 0 green, -1px -1px 2px black, 1px 1px 2px black,
-    1px -1px 2px black, -1px 1px 2px black;
+  color: rgb(81, 126, 51);
 }
 
 button {
-  background-color: green;
+  background-color: rgb(81, 126, 51);
   padding: 6px;
   border: none;
-  color: transparent;
-  text-shadow: 0 0 0 rgb(255, 255, 255), -1px -1px 2px black, 1px 1px 2px black,
-    1px -1px 2px black, -1px 1px 2px black;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+  color: white;
 }
 
 button:hover {
+  background-color: rgb(147, 197, 114);
   transform: scale(1.11);
 }

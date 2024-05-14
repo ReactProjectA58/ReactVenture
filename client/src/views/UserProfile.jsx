@@ -6,7 +6,7 @@ import { getAllPosts } from "../services/posts.service";
 import "./UserProfile.css"; // Import CSS file for styling
 
 export default function UserProfile() {
-  const { userData } = useContext(AppContext);
+  const { userData, user } = useContext(AppContext);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [error, setError] = useState("");
@@ -81,7 +81,8 @@ export default function UserProfile() {
               {!isEditing && (
                 <>
                   <p>
-                    Name: {userData.firstName} {userData.lastName}{" "}
+                    <span style={{ fontWeight: "bold" }}>Name: </span>{" "}
+                    {userData.firstName} {userData.lastName}{" "}
                     <button
                       className="edit-button"
                       onClick={() => setIsEditing(true)}
@@ -89,28 +90,36 @@ export default function UserProfile() {
                       Edit
                     </button>
                   </p>
-                  <p>Username: {userData.handle}</p>
-                  <p>Email: {userData.email}</p>
-                  {userData.isAdmin && <p>Status: Admin</p>}
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Username: </span>{" "}
+                    {userData.handle}
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Email: </span>{" "}
+                    {userData.email}
+                  </p>
                 </>
               )}
               {isEditing && (
                 <form onSubmit={handleSubmit}>
                   <div className="edit-row">
-                    <p>Name:</p>
-                    <input
-                      type="text"
-                      placeholder="New First Name"
-                      value={newFirstName}
-                      onChange={(e) => setNewFirstName(e.target.value)}
-                    />
-                    <input
-                      type="text"
-                      placeholder="New Last Name"
-                      value={newLastName}
-                      onChange={(e) => setNewLastName(e.target.value)}
-                    />
-
+                    <p style={{ fontWeight: "bold" }}>Name:</p>
+                    <div className="new-first-name-field">
+                      <input
+                        type="text"
+                        placeholder={userData.firstName}
+                        value={newFirstName}
+                        onChange={(e) => setNewFirstName(e.target.value)}
+                      />
+                    </div>
+                    <div className="new-last-name-field">
+                      <input
+                        type="text"
+                        placeholder={userData.lastName}
+                        value={newLastName}
+                        onChange={(e) => setNewLastName(e.target.value)}
+                      />
+                    </div>
                     <div>
                       <button className="update-button" type="submit">
                         Update
@@ -125,32 +134,39 @@ export default function UserProfile() {
                       </button>
                     </div>
                   </div>
-                  <p>Username: {userData.handle}</p>
-                  <p>Email: {userData.email}</p>
-                  {userData.isAdmin && <p>Status: Admin</p>}
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Username: </span>{" "}
+                    {userData.handle}
+                  </p>
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Email: </span>{" "}
+                    {userData.email}
+                  </p>
                 </form>
               )}
             </div>
           </div>
         </div>
       )}
-      <h2>Your Posts</h2>
-      {userPosts.length > 0 ? (
-        <ul>
-          {userPosts.map((post) => (
-            <li key={post.id}>
-              <Link to={`/posts/${post.id}`}>
-                <h3>{post.title}</h3>
-              </Link>
-              <p>{post.content}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No posts found.</p>
-      )}
-      {error && <p>{error}</p>}
-      {successMessage && <p>{successMessage}</p>}
+      <div className="user-posts-container">
+        <h2>Your Posts</h2>
+        {userPosts.length > 0 ? (
+          <ul>
+            {userPosts.map((post) => (
+              <li key={post.id}>
+                <Link to={`/posts/${post.id}`}>
+                  <h3>{post.title}</h3>
+                </Link>
+                <p>{post.content}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No posts found.</p>
+        )}
+        {error && <p>{error}</p>}
+        {successMessage && <p>{successMessage}</p>}
+      </div>
     </div>
   );
 }

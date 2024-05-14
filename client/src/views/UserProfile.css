@@ -69,3 +69,15 @@
   background-color: black;
   padding: 3px;
 }
+
+.new-first-name-field {
+  border-color: green;
+  background-color: transparent;
+  color: black;
+}
+
+.new-last-name-field {
+  border-color: green;
+  background-color: transparent;
+  color: black;
+}

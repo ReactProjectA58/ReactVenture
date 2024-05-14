@@ -154,11 +154,11 @@ export default function UserProfile() {
         </div>
         <div className="user-posts-container">
           {userPosts.length > 0 ? (
-            <ul>
+            <ul className="posts-list">
               {userPosts.map((post) => (
                 <li key={post.id}>
                   <Link to={`/posts/${post.id}`}>
-                    <h1 style={{ fontSize: 28 }}>{post.title}</h1>
+                    <h1>{post.title}</h1>
                   </Link>
                 </li>
               ))}

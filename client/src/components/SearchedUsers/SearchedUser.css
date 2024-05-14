@@ -19,7 +19,7 @@
   margin: 10px;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgb(52, 129, 31);
+  background-color: rgb(147, 197, 114);
   box-sizing: border-box;
   border-top-left-radius: 9%;
   height: 225px;
@@ -63,6 +63,9 @@ p {
 }
 
 .profile-button {
-  background-color: green;
+  background-color: rgb(81, 126, 51);
   padding: 3px;
+}
+.profile-button:hover {
+  background-color: rgb(147, 197, 114);
 }

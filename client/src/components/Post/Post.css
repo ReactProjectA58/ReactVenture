@@ -3,7 +3,7 @@
   margin: 10px;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgb(52, 129, 31);
+  background-color: rgb(147, 197, 114);
   box-sizing: border-box;
   height: auto;
   width: 100%;
@@ -57,9 +57,14 @@
 
 .remove-button,
 .restore-button {
-  background-color: #333;
+  background-color: #000000;
   padding: 3px;
   margin-right: 5px;
+}
+
+.remove-button:hover,
+.restore-button:hover {
+  background-color: gray;
 }
 
 .bi.bi-hand-thumbs-up,
@@ -72,6 +77,10 @@
 }
 
 .view-button {
-  background-color: green;
+  background-color: rgb(81, 126, 51);
+  padding: 3px;
+}
+.view-button:hover {
+  background-color: rgb(147, 197, 114);
   padding: 3px;
 }

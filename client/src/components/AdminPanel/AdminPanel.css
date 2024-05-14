@@ -1,14 +1,17 @@
 .btn {
-  background-color: green;
-  border-color: green;
+  background-color: rgb(81, 126, 51);
+  border-color: transparent;
 }
 
+.btn:hover {
+  background-color: rgb(147, 197, 114);
+}
 .dropdown-item {
   width: 90%;
 }
 
 .dropdown-item:active {
-  background-color: gainsboro;
+  background-color: rgb(147, 197, 114);
 }
 
 .header-container {

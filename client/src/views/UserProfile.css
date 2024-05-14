@@ -44,7 +44,7 @@
   margin: 10px;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgb(52, 129, 31);
+  background-color: rgb(147, 197, 114);
   box-sizing: border-box;
   height: auto;
   width: auto;
@@ -52,22 +52,32 @@
 }
 
 .edit-button {
-  background-color: green;
+  background-color: rgb(81, 126, 51);
   padding-left: 6px;
   padding-right: 6px;
   padding-bottom: 1px;
   padding-top: 1px;
 }
+.edit-button:hover {
+  background-color: rgb(147, 197, 114);
+  border-color: transparent;
+}
 
 .update-button {
-  background-color: green;
+  background-color: rgb(81, 126, 51);
   padding: 3px;
   margin-right: 3px;
+}
+.update-button:hover {
+  background-color: rgb(147, 197, 114);
 }
 
 .cancel-button {
   background-color: black;
   padding: 3px;
+}
+.cancel-button:hover {
+  background-color: gray;
 }
 
 .new-first-name-field {

@@ -23,7 +23,7 @@ export default function AllPosts() {
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
   const [filterDeleted, setFilterDeleted] = useState(false);
-  
+
   const setSearch = (value) => {
     setSearchParams({ search: value });
   };
@@ -59,27 +59,29 @@ export default function AllPosts() {
   const handleRemovePost = async (postId) => {
     await removePost(postId);
     const updatedPosts = [...posts]; // Clone the posts array
-    const removedPostIndex = updatedPosts.findIndex((post) => post.id === postId);
+    const removedPostIndex = updatedPosts.findIndex(
+      (post) => post.id === postId
+    );
     if (removedPostIndex !== -1) {
       updatedPosts.splice(removedPostIndex, 1); // Remove the post from the cloned array
       setPosts(updatedPosts); // Update the state with the new array
     }
   };
-  
 
   const handleRestorePost = async (postId) => {
     await restorePost(postId);
     const updatedDeletedPosts = [...deletedPosts]; // Clone the deletedPosts array
-    const restoredPostIndex = updatedDeletedPosts.findIndex((post) => post.id === postId);
+    const restoredPostIndex = updatedDeletedPosts.findIndex(
+      (post) => post.id === postId
+    );
     if (restoredPostIndex !== -1) {
       const restoredPost = updatedDeletedPosts.splice(restoredPostIndex, 1)[0]; // Remove the post from the cloned array
       setDeletedPosts(updatedDeletedPosts); // Update the state with the new array
-  
+
       // Add the restored post to the posts array
       setPosts([...posts, restoredPost]);
     }
   };
-  
 
   const totalLikesCount = posts.reduce(
     (total, post) => total + (post.likedBy ? post.likedBy.length : 0),
@@ -98,8 +100,16 @@ export default function AllPosts() {
             type="text"
             name="search"
             id="search"
+            style={{
+              borderStyle: "inset",
+              borderWidth: "2px",
+              borderColor: "green",
+              backgroundColor: "white",
+              color: "black",
+              boxShadow: "inset 0px 0px 5px rgba(0, 0, 0, 0.5)",
+            }}
           />
-      </div>
+        </div>
         <div className="dropdowns-container">
           <div className="dropdown">
             <button
@@ -128,7 +138,7 @@ export default function AllPosts() {
               {userData && userData.isAdmin && (
                 <li>
                   <Link className="dropdown-item" to="/deleted">
-                  by Deleted Posts
+                    by Deleted Posts
                   </Link>
                 </li>
               )}
@@ -163,19 +173,21 @@ export default function AllPosts() {
         </div>
       </div>
       {/* Render posts */}
-      {posts.map((post) => (
-        <div key={post.id}>
-          <Post
-            post={post}
-            onRemove={() =>
-              (userData.isAdmin || userData.handle === post.author) &&
-              handleRemovePost(post.id)
-            }
-            showViewButton={true}
-            likesCount={post.likedBy ? post.likedBy.length : 0}
-          />
-        </div>
-      )).reverse()}
+      {posts
+        .map((post) => (
+          <div key={post.id}>
+            <Post
+              post={post}
+              onRemove={() =>
+                (userData.isAdmin || userData.handle === post.author) &&
+                handleRemovePost(post.id)
+              }
+              showViewButton={true}
+              likesCount={post.likedBy ? post.likedBy.length : 0}
+            />
+          </div>
+        ))
+        .reverse()}
     </div>
   );
 }

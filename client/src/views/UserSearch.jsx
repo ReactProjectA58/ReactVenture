@@ -40,6 +40,14 @@ export default function UserSearch() {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Search for user..."
+        style={{
+          borderStyle: "inset",
+          borderWidth: "2px",
+          borderColor: "green",
+          backgroundColor: "white",
+          color: "black",
+          boxShadow: "inset 0px 0px 5px rgba(0, 0, 0, 0.5)",
+        }}
       />
 
       {searchPerformed && searchResults.length === 0 && (

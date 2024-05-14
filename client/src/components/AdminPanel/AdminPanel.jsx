@@ -14,17 +14,14 @@ export default function AdminPanelDropdown() {
       </button>
       <ul className="dropdown-menu" style={{}}>
         <li>
-          <Link className="dropdown-item" to="/deleted">
-            Deleted posts
-          </Link>
-        </li>
-        <li>
           <Link className="dropdown-item" to="/user-search">
             Users searcher
           </Link>
         </li>
         <li>
-          <Link className="dropdown-item">blablabla</Link>
+          <Link className="dropdown-item" to="/posts"> 
+          View All Posts
+          </Link>
         </li>
       </ul>
     </div>

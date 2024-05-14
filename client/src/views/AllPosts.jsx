@@ -4,6 +4,7 @@ import {
   getAllPosts,
   removePost,
   restorePost,
+  getDeletedPosts,
 } from "../services/posts.service";
 import Post from "../components/Post/Post";
 import { useSearchParams } from "react-router-dom";
@@ -21,6 +22,7 @@ export default function AllPosts() {
   const { userData } = useContext(AppContext);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [showFilterDropdown, setShowFilterDropdown] = useState(false);
+  const [filterDeleted, setFilterDeleted] = useState(false);
   
   const setSearch = (value) => {
     setSearchParams({ search: value });
@@ -123,6 +125,13 @@ export default function AllPosts() {
                   by Likes
                 </Link>
               </li>
+              {userData && userData.isAdmin && (
+                <li>
+                  <Link className="dropdown-item" to="/deleted">
+                  by Deleted Posts
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
           <div className="dropdown">

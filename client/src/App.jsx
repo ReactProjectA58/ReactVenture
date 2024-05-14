@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./App.css";
 
 import Home from "./views/Home.jsx";
@@ -25,13 +25,14 @@ import FilteredByComments from "./components/Sort-and-filter/FilteredByComments.
 import FilteredByLikes from "./components/Sort-and-filter/FilteredByLikes.jsx";
 import SortedByAuthor from "./components/Sort-and-filter/SortedByAuthor.jsx";
 import SortedByDate from "./components/Sort-and-filter/SortedByDate.jsx";
+import RestrictedHeader from "./RestrictedHeader.jsx";
 
 function App() {
   const [appState, setAppState] = useState({
     user: null,
     userData: null,
   });
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   if (appState.user !== user) {
     setAppState({ ...appState, user });
@@ -52,7 +53,15 @@ function App() {
     <>
       <BrowserRouter>
         <AppContext.Provider value={{ ...appState, setAppState }}>
-          <Header />
+          {appState.userData && (
+            <>
+              {appState.userData.isBlocked ? (
+                <RestrictedHeader userData={appState.userData} />
+              ) : (
+                <Header />
+              )}
+            </>
+          )}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

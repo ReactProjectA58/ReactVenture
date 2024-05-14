@@ -1,7 +1,7 @@
 import { createContext } from "react";
 
 export const AppContext = createContext({
-  user: { isBlocked: false },
-  userData: { handle: null, isAdmin: false },
+  user: null,
+  userData: null,
   setAppState: () => {},
 });

@@ -2,10 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { getDeletedPosts, restorePost } from "../services/posts.service";
 import Post from "../components/Post/Post";
 import { AppContext } from "../context/AppContext";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function DeletedPosts() {
   const [deletedPosts, setDeletedPosts] = useState([]);
   const { userData } = useContext(AppContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getDeletedPosts().then(setDeletedPosts);
@@ -14,6 +16,7 @@ export default function DeletedPosts() {
   const handleRestorePost = async (postId) => {
     await restorePost(postId);
     setDeletedPosts(deletedPosts.filter((post) => post.id !== postId));
+    deletedPosts.length === 1 && navigate("/posts");
   };
 
   return (

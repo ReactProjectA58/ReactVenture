@@ -1,13 +1,32 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom"; // Import Link
 import { AppContext } from "../context/AppContext";
 import { editNames } from "../services/users.service";
+import { getAllPosts } from "../services/posts.service";
 
-export default function ProfilePage() {
+export default function UserProfile() {
   const { userData } = useContext(AppContext);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [userPosts, setUserPosts] = useState([]);
+
+  useEffect(() => {
+    async function fetchUserPosts() {
+      try {
+        if (userData) {
+          const posts = await getAllPosts(userData.handle);
+          setUserPosts(posts);
+        }
+      } catch (error) {
+        console.error("Error fetching user posts:", error);
+        setError("Failed to fetch user posts. Please try again.");
+      }
+    }
+
+    fetchUserPosts();
+  }, [userData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +70,7 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <h1>Profile Page</h1>
+      <h1>User Profile</h1>
       {userData && (
         <>
           <p>
@@ -62,6 +81,26 @@ export default function ProfilePage() {
           {userData.isAdmin && <p>Status: Admin</p>}
         </>
       )}
+
+      <h2>Your Posts</h2>
+      {userPosts.length > 0 ? (
+        <ul>
+          {userPosts.map((post) => (
+            <li key={post.id}>
+              {/* Link to SinglePost view */}
+              <Link to={`/posts/${post.id}`}>
+                <h3>{post.title}</h3>
+              </Link>
+              <p>{post.content}</p>
+              {/* Render other post details */}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No posts found.</p>
+      )}
+      {error && <p>{error}</p>}
+      {successMessage && <p>{successMessage}</p>}
 
       <form onSubmit={handleSubmit}>
         <input
@@ -77,8 +116,6 @@ export default function ProfilePage() {
           onChange={(e) => setNewLastName(e.target.value)}
         />
         <button type="submit">Update Name</button>
-        {error && <p>{error}</p>}
-        {successMessage && <p>{successMessage}</p>}
       </form>
     </div>
   );

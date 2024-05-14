@@ -56,15 +56,28 @@ export default function AllPosts() {
 
   const handleRemovePost = async (postId) => {
     await removePost(postId);
-    const removedPost = posts.find((post) => post.id === postId);
-    setPosts(posts.filter((post) => post.id !== postId));
+    const updatedPosts = [...posts]; // Clone the posts array
+    const removedPostIndex = updatedPosts.findIndex((post) => post.id === postId);
+    if (removedPostIndex !== -1) {
+      updatedPosts.splice(removedPostIndex, 1); // Remove the post from the cloned array
+      setPosts(updatedPosts); // Update the state with the new array
+    }
   };
+  
 
   const handleRestorePost = async (postId) => {
     await restorePost(postId);
-    const restoredPost = deletedPosts.find((post) => post.id === postId);
-    setDeletedPosts(deletedPosts.filter((post) => post.id !== postId));
+    const updatedDeletedPosts = [...deletedPosts]; // Clone the deletedPosts array
+    const restoredPostIndex = updatedDeletedPosts.findIndex((post) => post.id === postId);
+    if (restoredPostIndex !== -1) {
+      const restoredPost = updatedDeletedPosts.splice(restoredPostIndex, 1)[0]; // Remove the post from the cloned array
+      setDeletedPosts(updatedDeletedPosts); // Update the state with the new array
+  
+      // Add the restored post to the posts array
+      setPosts([...posts, restoredPost]);
+    }
   };
+  
 
   const totalLikesCount = posts.reduce(
     (total, post) => total + (post.likedBy ? post.likedBy.length : 0),
@@ -153,7 +166,7 @@ export default function AllPosts() {
             likesCount={post.likedBy ? post.likedBy.length : 0}
           />
         </div>
-      ))}
+      )).reverse()}
     </div>
   );
 }

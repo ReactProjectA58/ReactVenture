@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import { addPost } from "../services/posts.service";
 import { AppContext } from "../context/AppContext";
 import { POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH, POST_TITLE_MAX_LENGTH, POST_TITLE_MIN_LENGTH } from "../common/constants";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export default function CreatePost() {
     const [post, setPost] = useState({
@@ -10,6 +11,7 @@ export default function CreatePost() {
         content: "",
     });
     const { userData } = useContext(AppContext);
+    const navigate = useNavigate();
 
     const updatePost = (value, key) => {
         setPost({
@@ -41,6 +43,8 @@ export default function CreatePost() {
             title: "",
             content: "",
         });
+
+        navigate('/posts');
     };
 
     return (

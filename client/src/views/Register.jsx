@@ -91,58 +91,70 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Register</h1>
-      {/* {user.isAdmin && <div>hui</div>} */}
 
-      <label htmlFor="firstName">First Name:</label>
-      <input
-        value={form.firstName}
-        onChange={updateForm("firstName")}
-        type="text"
-        name="firstName"
-        id="firstName"
-      />
-      <br />
-      <label htmlFor="lastName">Last Name:</label>
-      <input
-        value={form.lastName}
-        onChange={updateForm("lastName")}
-        type="text"
-        name="lastName"
-        id="lastName"
-      />
-      <br />
+      <div className="mb-3">
+        <label htmlFor="firstName" className="form-label">First Name:</label>
+        <input
+          value={form.firstName}
+          onChange={updateForm("firstName")}
+          type="text"
+          className="form-control"
+          name="firstName"
+          id="firstName"
+        />
+      </div>
+      
+      <div className="mb-3">
+        <label htmlFor="lastName" className="form-label">Last Name:</label>
+        <input
+          value={form.lastName}
+          onChange={updateForm("lastName")}
+          type="text"
+          className="form-control"
+          name="lastName"
+          id="lastName"
+        />
+      </div>
 
-      <label htmlFor="username">Username:</label>
-      <input
-        value={form.username}
-        onChange={updateForm("username")}
-        type="text"
-        name="username"
-        id="username"
-      />
-      <br />
-      <label htmlFor="email">Email:</label>
-      <input
-        value={form.email}
-        onChange={updateForm("email")}
-        type="text"
-        name="email"
-        id="email"
-      />
-      <br />
-      <label htmlFor="password">Password:</label>
-      <input
-        value={form.password}
-        onChange={updateForm("password")}
-        type="password"
-        name="password"
-        id="password"
-      />
-      <br />
-      <br />
-      <button onClick={register}>Register</button>
+      <div className="mb-3">
+        <label htmlFor="username" className="form-label">Username:</label>
+        <input
+          value={form.username}
+          onChange={updateForm("username")}
+          type="text"
+          className="form-control"
+          name="username"
+          id="username"
+        />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">Email:</label>
+        <input
+          value={form.email}
+          onChange={updateForm("email")}
+          type="email"
+          className="form-control"
+          name="email"
+          id="email"
+        />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="password" className="form-label">Password:</label>
+        <input
+          value={form.password}
+          onChange={updateForm("password")}
+          type="password"
+          className="form-control"
+          name="password"
+          id="password"
+        />
+      </div>
+
+      <button className="btn btn-primary" onClick={register}>Register</button>
     </div>
   );
 }

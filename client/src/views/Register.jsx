@@ -94,9 +94,9 @@ export default function Register() {
     <div
       className="container"
       style={{
-        position: "fixed",
-        top: "40%",
-        left: "50%",
+        position: "absolute",
+        top: "50%",
+        left: "49%",
         transform: "translate(-50%, -50%)",
       }}
     >

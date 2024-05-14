@@ -38,9 +38,9 @@ export default function Login() {
       style={{
         marginTop: "-0.7rem",
 
-        position: "fixed",
-        top: "40%",
-        left: "50%",
+        position: "absolute",
+        top: "45%",
+        left: "49%",
         transform: "translate(-50%, -50%)",
         width: "15%",
       }}

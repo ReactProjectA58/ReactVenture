@@ -120,7 +120,7 @@
 .new-last-name-field {
   margin-right: -70px;
   border-color: green;
-  background-color: white;
+  background-color: transparent
   color: black;
 }
 
@@ -137,7 +137,7 @@
 
 .posts-list li::before {
   content: "•";
-  color: rgb(81, 126, 51);
+  color: rgb(26, 46, 12);
   margin-right: 0.5em;
 }
 

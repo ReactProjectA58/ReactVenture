@@ -25,7 +25,12 @@ export default function Header() {
   }
 
   return (
-    <header className="header-container">
+    <header
+      className="header-container"
+      style={{
+        backgroundColor: "rgba(255,255,255, 0.6)",
+      }}
+    >
       <div className="navigation-links">
         <NavLink to="/" className="nav-link">
           Home
@@ -53,7 +58,11 @@ export default function Header() {
               My Profile
             </NavLink>
 
-            <Link onClick={logout} className="logout-nav-link">
+            <Link
+              onClick={logout}
+              className="logout-nav-link"
+              style={{ color: "rgb(90, 68, 22)" }}
+            >
               Logout
             </Link>
 

@@ -52,6 +52,19 @@ function App() {
 
   return (
     <>
+      <div>
+        <img
+          src="svg/532.png"
+          alt=""
+          style={{
+            width: "114%",
+            position: "absolute",
+            right: "-4%",
+            bottom: "-54%",
+            zIndex: "-1",
+          }}
+        />
+      </div>
       <BrowserRouter>
         <AppContext.Provider value={{ ...appState, setAppState }}>
           {appState.userData && (

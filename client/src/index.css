@@ -3,7 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color: rgba(0, 0, 0, 0.87);
   background: rgb(232, 240, 231);
   background: radial-gradient(
     circle,
@@ -57,7 +56,6 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-
 .logout-nav-link {
   font-weight: 750;
   font-size: 18px;
@@ -68,11 +66,13 @@ button:focus-visible {
   color: rgb(147, 197, 114);
 }
 .nav-link {
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px;
+  color: rgb(35, 99, 23);
 }
 .nav-link.active {
-  color: rgb(147, 197, 114);
+  color: rgb(35, 99, 23);
+  font-weight: 600;
 }
 
 .handle {

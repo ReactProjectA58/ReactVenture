@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { searchUsers } from "../services/admin.service";
 import SearchedUser from "../components/SearchedUsers/SearchedUser";
 import PropTypes from "prop-types";
@@ -6,13 +6,32 @@ import PropTypes from "prop-types";
 export default function UserSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [users, setUsers] = useState([]);
   const [searchPerformed, setSearchPerformed] = useState(false);
 
-  const handleSearch = async () => {
-    const results = await searchUsers(searchTerm);
-    setSearchResults(results);
-    setSearchPerformed(true);
-  };
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      const allUsers = await searchUsers("");
+      setUsers(allUsers);
+    };
+
+    fetchAllUsers();
+  }, []);
+
+  useEffect(() => {
+    const performSearch = async () => {
+      if (searchTerm.trim() !== "") {
+        const results = await searchUsers(searchTerm);
+        setSearchResults(results);
+        setSearchPerformed(true);
+      } else {
+        setSearchResults(users);
+        setSearchPerformed(false);
+      }
+    };
+
+    performSearch();
+  }, [searchTerm, users]);
 
   return (
     <div>
@@ -22,19 +41,6 @@ export default function UserSearch() {
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Search for user..."
       />
-
-      <button onClick={handleSearch}>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          className="bi bi-search"
-          viewBox="0 0 16 16"
-        >
-          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-        </svg>
-      </button>
 
       {searchPerformed && searchResults.length === 0 && (
         <>
@@ -50,13 +56,10 @@ export default function UserSearch() {
       </div>
     </div>
   );
-
-  
 }
 
 SearchedUser.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.string.isRequired, // Change this to string
-    // other prop types
+    id: PropTypes.string,
   }).isRequired,
 };

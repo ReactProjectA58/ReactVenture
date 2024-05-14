@@ -18,13 +18,11 @@ export const searchUsers = async (searchTerm) => {
     id: key,
   }));
 
-  return users
-    .filter(
-      (user) =>
-        (user.handle &&
-          user.handle.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (user.email &&
-          user.email.toLowerCase().includes(searchTerm.toLowerCase()))
-    )
-    .splice(0, 10);
+  return users.filter(
+    (user) =>
+      (user.handle &&
+        user.handle.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (user.email &&
+        user.email.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 };

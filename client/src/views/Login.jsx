@@ -33,31 +33,67 @@ export default function Login() {
   };
 
   return (
-    <div className="container">
-      <h1>Login</h1>
+    <div
+      className="container"
+      style={{
+        marginTop: "-0.7rem",
+
+        position: "fixed",
+        top: "40%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "15%",
+      }}
+    >
+      <h1
+        style={{
+          color: "rgb(81, 126, 51)",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        Login
+      </h1>
       <div className="mb-3">
-        <label htmlFor="email" className="form-label">Email:</label>
         <input
+          placeholder="Email"
           value={form.email}
           onChange={updateForm("email")}
           type="text"
           className="form-control"
           name="email"
           id="email"
+          style={{
+            marginTop: "-0.7rem",
+          }}
         />
       </div>
       <div className="mb-3">
-        <label htmlFor="password" className="form-label">Password:</label>
         <input
+          placeholder="Password"
           value={form.password}
           onChange={updateForm("password")}
           type="password"
           className="form-control"
           name="password"
           id="password"
+          style={{
+            marginTop: "-0.7rem",
+          }}
         />
       </div>
-      <Button className="btn btn-primary" onClick={login}>Login</Button>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "-0.6rem",
+        }}
+      >
+        <Button className="btn btn-primary" onClick={login}>
+          Login
+        </Button>
+      </div>
     </div>
   );
 }

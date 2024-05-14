@@ -91,70 +91,146 @@ export default function Register() {
   };
 
   return (
-    <div className="container">
-      <h1>Register</h1>
+    <div
+      className="container"
+      style={{
+        position: "fixed",
+        top: "40%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      <h1
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          color: "rgb(81, 126, 51)",
+          position: "relative",
+          zIndex: "999",
+        }}
+      >
+        Register
+      </h1>
 
-      <div className="mb-3">
-        <label htmlFor="firstName" className="form-label">First Name:</label>
+      <div
+        className="mb-3"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <input
+          placeholder="First Name"
           value={form.firstName}
           onChange={updateForm("firstName")}
           type="text"
           className="form-control"
           name="firstName"
           id="firstName"
+          style={{ marginTop: "-0.7rem", width: "20%" }}
         />
       </div>
-      
-      <div className="mb-3">
-        <label htmlFor="lastName" className="form-label">Last Name:</label>
+
+      <div
+        className="mb-3"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <input
+          placeholder="Last Name"
           value={form.lastName}
           onChange={updateForm("lastName")}
           type="text"
           className="form-control"
           name="lastName"
           id="lastName"
+          style={{
+            marginTop: "-0.7rem",
+            width: "20%",
+          }}
         />
       </div>
 
-      <div className="mb-3">
-        <label htmlFor="username" className="form-label">Username:</label>
+      <div
+        className="mb-3"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <input
+          placeholder="Username"
           value={form.username}
           onChange={updateForm("username")}
           type="text"
           className="form-control"
           name="username"
           id="username"
+          style={{
+            marginTop: "-0.7rem",
+            width: "20%",
+          }}
         />
       </div>
 
-      <div className="mb-3">
-        <label htmlFor="email" className="form-label">Email:</label>
+      <div
+        className="mb-3"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <input
+          placeholder="Email"
           value={form.email}
           onChange={updateForm("email")}
           type="email"
           className="form-control"
           name="email"
           id="email"
+          style={{
+            marginTop: "-0.7rem",
+            width: "20%",
+          }}
         />
       </div>
 
-      <div className="mb-3">
-        <label htmlFor="password" className="form-label">Password:</label>
+      <div
+        className="mb-3"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <input
+          placeholder="Password"
           value={form.password}
           onChange={updateForm("password")}
           type="password"
           className="form-control"
           name="password"
           id="password"
+          style={{
+            marginTop: "-0.7rem",
+            width: "20%",
+          }}
         />
       </div>
 
-      <button className="btn btn-primary" onClick={register}>Register</button>
+      <div
+        style={{
+          marginTop: "-0.7rem",
+
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <button className="btn btn-primary" onClick={register}>
+          Register
+        </button>
+      </div>
     </div>
   );
 }

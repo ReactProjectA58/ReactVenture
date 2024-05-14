@@ -91,13 +91,14 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
             </svg>
           )}
 
-          {isPostDeleted && isAdmin && post.isDeleted && (
+          {onRestore && isPostDeleted && isAdmin && post.isDeleted && (
             <button className="restore-button" onClick={restore}>
               Restore post
             </button>
           )}
 
-          {!isPostDeleted &&
+          {onRemove &&
+            !isPostDeleted &&
             ((isAdmin && !post.isDeleted) || (isAuthor && !post.isDeleted)) && (
               <button className="remove-button" onClick={remove}>
                 Remove post

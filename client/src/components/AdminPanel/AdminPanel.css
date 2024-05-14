@@ -1,3 +1,8 @@
+.btn {
+  background-color: green;
+  border-color: green;
+}
+
 .dropdown-item {
   width: 90%;
 }

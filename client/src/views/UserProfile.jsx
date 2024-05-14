@@ -75,56 +75,74 @@ export default function UserProfile() {
     <div className="user-profile-container">
       <h1>User Profile</h1>
       {userData && (
-        <>
-          {!isEditing && (
+        <div className="user-data-container outer-border">
+          <div className="user-info-container">
             <div className="profile-info">
-              <p>
-                Name: {userData.firstName} {userData.lastName}{" "}
-                <button onClick={() => setIsEditing(true)}>Edit</button>
-              </p>
-              <p>Username: {userData.handle}</p>
-              <p>Email: {userData.email}</p>
-              {userData.isAdmin && <p>Status: Admin</p>}
-            </div>
-          )}
-          {isEditing && (
-            <form className="edit-form" onSubmit={handleSubmit}>
-              <div className="edit-row">
-                <p>Name:</p>
-                <input
-                  type="text"
-                  placeholder="New First Name"
-                  value={newFirstName}
-                  onChange={(e) => setNewFirstName(e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="New Last Name"
-                  value={newLastName}
-                  onChange={(e) => setNewLastName(e.target.value)}
-                />
-                <button type="submit">Update</button>
-                <button onClick={() => setIsEditing(false)}>Cancel</button>
-              </div>
-              <p>Username: {userData.handle}</p>
-              <p>Email: {userData.email}</p>
-              {userData.isAdmin && <p>Status: Admin</p>}
-            </form>
-          )}
-        </>
-      )}
+              {!isEditing && (
+                <>
+                  <p>
+                    Name: {userData.firstName} {userData.lastName}{" "}
+                    <button
+                      className="edit-button"
+                      onClick={() => setIsEditing(true)}
+                    >
+                      Edit
+                    </button>
+                  </p>
+                  <p>Username: {userData.handle}</p>
+                  <p>Email: {userData.email}</p>
+                  {userData.isAdmin && <p>Status: Admin</p>}
+                </>
+              )}
+              {isEditing && (
+                <form onSubmit={handleSubmit}>
+                  <div className="edit-row">
+                    <p>Name:</p>
+                    <input
+                      type="text"
+                      placeholder="New First Name"
+                      value={newFirstName}
+                      onChange={(e) => setNewFirstName(e.target.value)}
+                    />
+                    <input
+                      type="text"
+                      placeholder="New Last Name"
+                      value={newLastName}
+                      onChange={(e) => setNewLastName(e.target.value)}
+                    />
 
+                    <div>
+                      <button className="update-button" type="submit">
+                        Update
+                      </button>
+                    </div>
+                    <div>
+                      <button
+                        className="cancel-button"
+                        onClick={() => setIsEditing(false)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                  <p>Username: {userData.handle}</p>
+                  <p>Email: {userData.email}</p>
+                  {userData.isAdmin && <p>Status: Admin</p>}
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
       <h2>Your Posts</h2>
       {userPosts.length > 0 ? (
         <ul>
           {userPosts.map((post) => (
             <li key={post.id}>
-              {/* Link to SinglePost view */}
               <Link to={`/posts/${post.id}`}>
                 <h3>{post.title}</h3>
               </Link>
               <p>{post.content}</p>
-              {/* Render other post details */}
             </li>
           ))}
         </ul>

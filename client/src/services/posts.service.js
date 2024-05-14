@@ -25,11 +25,11 @@ export const addPost = async (title, content, author) => {
   console.log(result.key);
 };
 
-export const getAllPosts = async (search) => {
+export const getAllPosts = async (author = null, search = '') => {
   const snapshot = await get(ref(db, "posts"));
   if (!snapshot.exists()) return [];
 
-  return Object.entries(snapshot.val())
+  let posts = Object.entries(snapshot.val())
     .map(([key, value]) => {
       return {
         ...value,
@@ -38,13 +38,21 @@ export const getAllPosts = async (search) => {
         createdOn: new Date(value.createdOn).toString(),
       };
     })
-    .filter(
-      (post) =>
-        post.content &&
-        post.content.toLowerCase().includes(search.toLowerCase()) &&
-        !post.isDeleted
+    .filter((post) => !post.isDeleted);
+
+  if (author) {
+    posts = posts.filter((post) => post.author === author);
+  }
+
+  if (search) {
+    posts = posts.filter((post) =>
+      post.content.toLowerCase().includes(search.toLowerCase())
     );
+  }
+
+  return posts;
 };
+
 
 export const getPostById = async (id) => {
   const snapshot = await get(ref(db, `posts/${id}`));
@@ -300,3 +308,9 @@ export const editPost = async (postId, updatedTitle, updatedContent) => {
     throw error;
   }
 };
+
+
+
+export const getPostsByAuthor = (handle) => {
+  return get(query(ref(db, 'posts'), orderByChild('author'), equalTo(handle)));
+}

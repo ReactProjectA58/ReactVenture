@@ -59,9 +59,14 @@ p {
 
 .block-button,
 .unblock-button {
-  background-color: #333;
+  background-color: black;
   padding: 3px;
   margin-right: 5px;
+}
+
+.block-button:hover,
+.unblock-button:hover {
+  background-color: gray;
 }
 
 .profile-button {

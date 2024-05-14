@@ -13,7 +13,12 @@ export default function RecentPosts() {
     <div>
       <h2>Recent Posts</h2>
       {recentPosts.map((post) => (
-        <Post key={post.id} post={post} likeCount={post.likedBy.length} /> // Pass the like count
+        <Post
+          key={post.id}
+          post={post}
+          likeCount={post.likedBy.length}
+          onRemove={() => false}
+        /> // Pass the like count
       ))}
     </div>
   );

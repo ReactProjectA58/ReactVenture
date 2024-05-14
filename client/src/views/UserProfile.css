@@ -23,9 +23,12 @@
 .profile-info > p {
   display: block;
 }
-
+.user-profile-container {
+  display: grid;
+  justify-items: start;
+}
 .user-info-container {
-  width: 104%;
+  width: 105%;
   height: auto;
   margin: 0px;
   margin-bottom: -10px;
@@ -40,7 +43,7 @@
   overflow: hidden;
 }
 
-.outer-border-container {
+.user-outer-border-container {
   display: inline-block;
   margin: 10px;
   padding: 10px;
@@ -52,6 +55,32 @@
   overflow: hidden;
 }
 
+.user-posts-container {
+  width: 104%;
+  height: auto;
+  margin: 0px;
+  margin-bottom: -10px;
+  padding: 10px;
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  background-color: white;
+  box-sizing: border-box;
+  color: black;
+  border-top-right-radius: 0%;
+  border-bottom-left-radius: 0%;
+  overflow: hidden;
+}
+.posts-outer-border-container {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(147, 197, 114);
+  box-sizing: border-box;
+  height: auto;
+  width: auto;
+  overflow: hidden;
+}
 .edit-button {
   background-color: rgb(81, 126, 51);
   padding-left: 6px;
@@ -93,4 +122,29 @@
   border-color: green;
   background-color: white;
   color: black;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+ul li::before {
+  content: "•";
+  color: rgb(81, 126, 51);
+  margin-right: 0.5em;
+}
+
+ul li h1 {
+  color: #1d6e42;
+}
+
+ul li h1:hover {
+  color: rgb(147, 197, 114);
 }

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Button from "./Button";
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
@@ -44,17 +44,18 @@ export default function Header() {
       <div className="user-section">
         {user && userData && (
           <>
-            <span className="user-welcome">{`Welcome, ${
-              userData.handle || "Loading"
-            }`}</span>
+            <span className="user-welcome">
+              Welcome,{" "}
+              <span className="handle">{userData.handle || "Loading"}</span>
+            </span>
 
             <NavLink to="/my-profile" className="nav-link">
               My Profile
             </NavLink>
 
-            <NavLink onClick={logout} className="nav-link">
-              LogOut
-            </NavLink>
+            <Link onClick={logout} className="logout-nav-link">
+              Logout
+            </Link>
 
             {/* <Button onClick={logout} className="logout-button">
               LogOut

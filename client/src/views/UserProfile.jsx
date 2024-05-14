@@ -73,9 +73,9 @@ export default function UserProfile() {
 
   return (
     <div className="user-profile-container">
-      <h1>User Profile</h1>
       {userData && (
-        <div className="user-data-container outer-border-container">
+        <div className="user-outer-border-container">
+          <h1 style={{ fontSize: 24 }}>My Profile</h1>
           <div className="user-info-container">
             <div className="profile-info">
               {!isEditing && (
@@ -148,24 +148,27 @@ export default function UserProfile() {
           </div>
         </div>
       )}
-      <div className="user-posts-container">
-        <h2>Your Posts</h2>
-        {userPosts.length > 0 ? (
-          <ul>
-            {userPosts.map((post) => (
-              <li key={post.id}>
-                <Link to={`/posts/${post.id}`}>
-                  <h3>{post.title}</h3>
-                </Link>
-                <p>{post.content}</p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No posts found.</p>
-        )}
-        {error && <p>{error}</p>}
-        {successMessage && <p>{successMessage}</p>}
+      <div className="posts-outer-border-container">
+        <div className="user-posts-title">
+          <h2 style={{ fontSize: 24 }}>My Posts</h2>
+        </div>
+        <div className="user-posts-container">
+          {userPosts.length > 0 ? (
+            <ul>
+              {userPosts.map((post) => (
+                <li key={post.id}>
+                  <Link to={`/posts/${post.id}`}>
+                    <h1 style={{ fontSize: 28 }}>{post.title}</h1>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No posts found.</p>
+          )}
+          {error && <p>{error}</p>}
+          {successMessage && <p>{successMessage}</p>}
+        </div>
       </div>
     </div>
   );

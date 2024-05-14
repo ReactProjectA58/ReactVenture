@@ -9,12 +9,16 @@ export default function RestrictedHeader() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userData) {
-      setLoading(false);
-    }
-  }, [userData]);
+    setLoading(false);
+  }, []);
 
-  const logout = async () => {
+  useEffect(() => {
+    if (userData && userData.isBlocked) {
+      navigate("/blocked");
+    }
+  }, [userData, navigate]);
+
+  const handleLogout = async () => {
     await logoutUser();
     setAppState({ user: null, userData: null });
     navigate("/login");
@@ -24,23 +28,19 @@ export default function RestrictedHeader() {
     return `loading`;
   }
 
-  console.log(userData.isBlocked);
-
   return (
     <header className="header-container">
       <div className="navigation-links">
-        {userData && (
+        {!userData.isBlocked && (
           <NavLink to="/" className="nav-link">
             Home
           </NavLink>
         )}
       </div>
       <div className="user-section">
-        {userData && (
-          <NavLink onClick={logout} className="nav-link">
-            Logout
-          </NavLink>
-        )}
+        <NavLink onClick={handleLogout} className="nav-link">
+          Logout
+        </NavLink>
       </div>
     </header>
   );

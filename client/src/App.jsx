@@ -26,6 +26,7 @@ import FilteredByLikes from "./components/Sort-and-filter/FilteredByLikes.jsx";
 import SortedByAuthor from "./components/Sort-and-filter/SortedByAuthor.jsx";
 import SortedByDate from "./components/Sort-and-filter/SortedByDate.jsx";
 import RestrictedHeader from "./RestrictedHeader.jsx";
+import Blocked from "./views/Blocked.jsx";
 
 function App() {
   const [appState, setAppState] = useState({
@@ -156,6 +157,7 @@ function App() {
             />
 
             <Route path="*" element={<NotFound />} />
+            <Route path="/blocked" element={<Blocked />} />
           </Routes>
           <Footer />
         </AppContext.Provider>

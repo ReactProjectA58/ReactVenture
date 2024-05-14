@@ -4,7 +4,6 @@ import { editPost, removePost } from "../services/posts.service";
 import { editComment } from "../services/comment.service";
 import { COMMENT_MAX_LENGTH, COMMENT_MIN_LENGTH, POST_CONTENT_MAX_LENGTH, POST_CONTENT_MIN_LENGTH, POST_TITLE_MAX_LENGTH, POST_TITLE_MIN_LENGTH } from "../common/constants";
 
-
 export function EditPost({ post }) {
   const [isEditingPost, setIsEditingPost] = useState(false);
   const [editedPostTitle, setEditedPostTitle] = useState(post.title);
@@ -22,7 +21,7 @@ export function EditPost({ post }) {
       setErrorMessage("Title and content cannot be empty.");
       return false;
     }
-    if (editedPostTitle.length < POST_TITLE_MIN_LENGTH) { // Check if title is too short
+    if (editedPostTitle.length < POST_TITLE_MIN_LENGTH) {
       setErrorMessage(`Title must be at least ${POST_TITLE_MIN_LENGTH} characters.`);
       return false;
     }
@@ -63,19 +62,17 @@ export function EditPost({ post }) {
   };
 
   return (
-    <div>
+    <div className="edit-post">
       {isEditingPost ? (
         <div>
-          <input type="text" value={editedPostTitle} onChange={(e) => setEditedPostTitle(e.target.value)} />
-          <textarea value={editedPostContent} onChange={(e) => setEditedPostContent(e.target.value)} />
-          <button onClick={handlePostUpdate}>Save</button>
-          <button onClick={handleCancelEdit}>Cancel</button>
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          <input type="text" className="form-control mb-2" value={editedPostTitle} onChange={(e) => setEditedPostTitle(e.target.value)} />
+          <textarea className="form-control mb-2" value={editedPostContent} onChange={(e) => setEditedPostContent(e.target.value)} />
+          <button className="btn btn-primary mr-2" onClick={handlePostUpdate}>Save</button>
+          <button className="btn btn-secondary" onClick={handleCancelEdit}>Cancel</button>
+          {errorMessage && <p className="text-danger">{errorMessage}</p>}
         </div>
       ) : (
-        <div>
-          <button onClick={handlePostEdit}>Edit Post</button>
-        </div>
+        <button className="btn btn-warning" onClick={handlePostEdit}>Edit Post</button>
       )}
     </div>
   );
@@ -131,16 +128,16 @@ export function EditComment({ comment }) {
   };
 
   return (
-    <div>
+    <div className="edit-comment">
       {isEditingComment ? (
         <div>
-          <textarea value={editedCommentContent} onChange={(e) => setEditedCommentContent(e.target.value)} />
-          <button onClick={handleCommentUpdate}>Save</button>
-          <button onClick={handleCancelEdit}>Cancel</button>
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          <textarea className="form-control mb-2" value={editedCommentContent} onChange={(e) => setEditedCommentContent(e.target.value)} />
+          <button className="btn btn-primary mr-2" onClick={handleCommentUpdate}>Save</button>
+          <button className="btn btn-secondary" onClick={handleCancelEdit}>Cancel</button>
+          {errorMessage && <p className="text-danger">{errorMessage}</p>}
         </div>
       ) : (
-        <button onClick={handleCommentEdit}>Edit Comment</button>
+        <button className="btn btn-warning" onClick={handleCommentEdit}>Edit Comment</button>
       )}
     </div>
   );

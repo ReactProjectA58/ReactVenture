@@ -94,7 +94,7 @@ export default function SinglePost() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Single Post</h1>
       {post && (
         <>
@@ -111,10 +111,11 @@ export default function SinglePost() {
           {(isAdmin || isPostOwner) && <EditPost post={post} />}
         </>
       )}
-      <div>
+      <div className="mt-4">
         <h2>Comments</h2>
         {/* Input field for adding new comment */}
         <textarea
+          className="form-control mb-2"
           value={newCommentContent}
           onChange={(e) => {
             setNewCommentContent(e.target.value);
@@ -122,13 +123,13 @@ export default function SinglePost() {
           }}
           placeholder="Add a comment..."
         />
-        <button onClick={handleAddComment}>Post Comment</button>
+        <button className="btn btn-primary mb-2" onClick={handleAddComment}>Post Comment</button>
         {commentErrorMessage && (
-          <p style={{ color: "red" }}>{commentErrorMessage}</p>
+          <p className="text-danger">{commentErrorMessage}</p>
         )}
         {/* Display comments */}
         {comments.map((comment) => (
-          <div key={comment.id}>
+          <div key={comment.id} className="mb-3">
             <Comment comment={comment} />
             {(isAdmin || isCommentOwner(comment)) && (
               <EditComment comment={comment} />

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "./context/AppContext";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "./services/auth.service";
 
 export default function RestrictedHeader() {
-  const { userData } = useContext(AppContext);
+  const { userData, setAppState } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userData) {
@@ -16,6 +17,7 @@ export default function RestrictedHeader() {
   const logout = async () => {
     await logoutUser();
     setAppState({ user: null, userData: null });
+    navigate("/login");
   };
 
   if (loading) {

@@ -28,20 +28,20 @@
   overflow: hidden;
 }
 .inner-create-post-container {
-  width: 100%;
+  width: 101%;
   height: auto;
-  margin: 10px;
+  margin: 1px;
   margin-bottom: -10px;
   padding: 10px;
   border: 1px solid rgb(255, 255, 255);
   border-radius: 5px;
-  background-color: rgb(214, 224, 215);
+  background-color: rgb(255, 255, 255);
   box-sizing: border-box;
   color: black;
   border-top-right-radius: 0%;
   border-bottom-left-radius: 0%;
   overflow: hidden;
-  box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.5); /* Spread out */
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.5);
 }
 
 .create-post-header {
@@ -57,9 +57,9 @@
 }
 
 .post-content {
-  font-weight: 700;
+  font-weight: 400
   font-size: 18px;
-  color: rgb(81, 126, 51);
+  color: rgb(0, 0, 0);
 }
 
 button {

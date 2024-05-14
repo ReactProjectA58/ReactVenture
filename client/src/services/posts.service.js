@@ -314,3 +314,31 @@ export const editPost = async (postId, updatedTitle, updatedContent) => {
 export const getPostsByAuthor = (handle) => {
   return get(query(ref(db, 'posts'), orderByChild('author'), equalTo(handle)));
 }
+
+export const getDeletedPostsByAuthor = async (handle) => {
+  try {
+    const deletedPostsRef = query(
+      ref(db, 'posts'),
+      orderByChild('author'),
+      equalTo(handle)
+    );
+
+    const snapshot = await get(deletedPostsRef);
+    const deletedPosts = [];
+
+    snapshot.forEach((childSnapshot) => {
+      const post = childSnapshot.val();
+      if (post.isDeleted) {
+        deletedPosts.push({
+          id: childSnapshot.key,
+          ...post
+        });
+      }
+    });
+
+    return deletedPosts;
+  } catch (error) {
+    console.error("Error fetching deleted posts:", error);
+    throw error;
+  }
+};

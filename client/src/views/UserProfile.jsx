@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"; // Import Link
 import { AppContext } from "../context/AppContext";
 import { editNames } from "../services/users.service";
 import { getAllPosts } from "../services/posts.service";
+import "./UserProfile.css"; // Import CSS file for styling
 
 export default function UserProfile() {
   const { userData } = useContext(AppContext);
@@ -11,6 +12,7 @@ export default function UserProfile() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [userPosts, setUserPosts] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     async function fetchUserPosts() {
@@ -62,6 +64,7 @@ export default function UserProfile() {
       setNewLastName("");
       setError("");
       setSuccessMessage("Name updated successfully!");
+      setIsEditing(false);
     } catch (error) {
       setError("Failed to update names. Please try again.");
       console.error("Error updating names:", error);
@@ -69,16 +72,45 @@ export default function UserProfile() {
   };
 
   return (
-    <div>
+    <div className="user-profile-container">
       <h1>User Profile</h1>
       {userData && (
         <>
-          <p>
-            Name: {userData.firstName} {userData.lastName}
-          </p>
-          <p>Username: {userData.handle}</p>
-          <p>Email: {userData.email}</p>
-          {userData.isAdmin && <p>Status: Admin</p>}
+          {!isEditing && (
+            <div className="profile-info">
+              <p>
+                Name: {userData.firstName} {userData.lastName}{" "}
+                <button onClick={() => setIsEditing(true)}>Edit</button>
+              </p>
+              <p>Username: {userData.handle}</p>
+              <p>Email: {userData.email}</p>
+              {userData.isAdmin && <p>Status: Admin</p>}
+            </div>
+          )}
+          {isEditing && (
+            <form className="edit-form" onSubmit={handleSubmit}>
+              <div className="edit-row">
+                <p>Name:</p>
+                <input
+                  type="text"
+                  placeholder="New First Name"
+                  value={newFirstName}
+                  onChange={(e) => setNewFirstName(e.target.value)}
+                />
+                <input
+                  type="text"
+                  placeholder="New Last Name"
+                  value={newLastName}
+                  onChange={(e) => setNewLastName(e.target.value)}
+                />
+                <button type="submit">Update</button>
+                <button onClick={() => setIsEditing(false)}>Cancel</button>
+              </div>
+              <p>Username: {userData.handle}</p>
+              <p>Email: {userData.email}</p>
+              {userData.isAdmin && <p>Status: Admin</p>}
+            </form>
+          )}
         </>
       )}
 
@@ -101,22 +133,6 @@ export default function UserProfile() {
       )}
       {error && <p>{error}</p>}
       {successMessage && <p>{successMessage}</p>}
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="New First Name"
-          value={newFirstName}
-          onChange={(e) => setNewFirstName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="New Last Name"
-          value={newLastName}
-          onChange={(e) => setNewLastName(e.target.value)}
-        />
-        <button type="submit">Update Name</button>
-      </form>
     </div>
   );
 }

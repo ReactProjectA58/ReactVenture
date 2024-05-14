@@ -141,7 +141,7 @@ export default function AllPosts() {
         </div>
       </div>
       {/* Render posts */}
-      {posts.map((post) => (
+      {posts.reverse().map((post) => (
         <div key={post.id}>
           <Post
             post={post}

@@ -90,7 +90,6 @@ export default function AllPosts() {
 
   return (
     <div>
-      <h1>All posts</h1>
       <div className="search-filter-container">
         <div className="search-container">
           <label htmlFor="search">Search</label>

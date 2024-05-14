@@ -12,7 +12,7 @@ import { addComment, getAllComments } from "../services/comment.service";
 import { db } from "../config/firebase-config";
 import { ref, onValue, query, orderByChild, equalTo } from "firebase/database";
 import { AppContext } from "../context/AppContext";
-import { EditPost, EditComment } from "./EditContent"; 
+import { EditPost, EditComment } from "./EditContent";
 import { COMMENT_MIN_LENGTH, COMMENT_MAX_LENGTH } from "../common/constants";
 
 export default function SinglePost() {
@@ -81,8 +81,13 @@ export default function SinglePost() {
       return;
     }
 
-    if (newCommentContent.length < COMMENT_MIN_LENGTH || newCommentContent.length > COMMENT_MAX_LENGTH) {
-      setCommentErrorMessage(`Comment length must be between ${COMMENT_MIN_LENGTH} and ${COMMENT_MAX_LENGTH} characters.`);
+    if (
+      newCommentContent.length < COMMENT_MIN_LENGTH ||
+      newCommentContent.length > COMMENT_MAX_LENGTH
+    ) {
+      setCommentErrorMessage(
+        `Comment length must be between ${COMMENT_MIN_LENGTH} and ${COMMENT_MAX_LENGTH} characters.`
+      );
       return;
     }
 
@@ -95,7 +100,6 @@ export default function SinglePost() {
 
   return (
     <div className="container">
-      <h1>Single Post</h1>
       {post && (
         <>
           <Post
@@ -111,9 +115,10 @@ export default function SinglePost() {
           {(isAdmin || isPostOwner) && <EditPost post={post} />}
         </>
       )}
-      <div className="mt-4">
-        <h2>Comments</h2>
-        {/* Input field for adding new comment */}
+      <div className="mt-4" style={{ marginLeft: "1.2rem" }}>
+        <h2 style={{ fontWeight: "600", color: "rgb(81, 126, 51)" }}>
+          Comments
+        </h2>
         <textarea
           className="form-control mb-2"
           value={newCommentContent}
@@ -123,19 +128,29 @@ export default function SinglePost() {
           }}
           placeholder="Add a comment..."
         />
-        <button className="btn btn-primary mb-2" onClick={handleAddComment}>Post Comment</button>
+        <button
+          className="btn btn-primary mb-2"
+          onClick={handleAddComment}
+          style={{ fontWeight: "600", color: "white" }}
+        >
+          Post Comment
+        </button>
         {commentErrorMessage && (
           <p className="text-danger">{commentErrorMessage}</p>
         )}
         {/* Display comments */}
-        {comments.map((comment) => (
-          <div key={comment.id} className="mb-3">
-            <Comment comment={comment} />
-            {(isAdmin || isCommentOwner(comment)) && (
-              <EditComment comment={comment} />
-            )}
-          </div>
-        ))}
+        <ol>
+          {comments.map((comment) => (
+            <div key={comment.id} className="mb-3">
+              <li style={{ marginBottom: "-0.4rem" }}>
+                <Comment comment={comment} />
+                {(isAdmin || isCommentOwner(comment)) && (
+                  <EditComment comment={comment} />
+                )}
+              </li>
+            </div>
+          ))}
+        </ol>
       </div>
     </div>
   );

@@ -124,27 +124,28 @@
   color: black;
 }
 
-ul {
+.posts-list {
   list-style: none;
   padding: 0;
 }
 
-ul li {
+.posts-list li {
   display: flex;
   align-items: center;
   margin-bottom: 0.5em;
 }
 
-ul li::before {
+.posts-list li::before {
   content: "•";
   color: rgb(81, 126, 51);
   margin-right: 0.5em;
 }
 
-ul li h1 {
+.posts-list li h1 {
   color: #1d6e42;
+  font-size: 28px;
 }
 
-ul li h1:hover {
+.posts-list li h1:hover {
   color: rgb(147, 197, 114);
 }

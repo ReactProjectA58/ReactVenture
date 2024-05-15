@@ -8,7 +8,7 @@ import {
   equalTo,
   orderByChild,
   orderByKey,
-  limitToLast
+  limitToLast,
 } from "firebase/database";
 import { db } from "../config/firebase-config";
 
@@ -25,7 +25,7 @@ export const addPost = async (title, content, author) => {
   console.log(result.key);
 };
 
-export const getAllPosts = async (author = null, search = '') => {
+export const getAllPosts = async (author = null, search = "") => {
   const snapshot = await get(ref(db, "posts"));
   if (!snapshot.exists()) return [];
 
@@ -53,7 +53,6 @@ export const getAllPosts = async (author = null, search = '') => {
   return posts;
 };
 
-
 export const getPostById = async (id) => {
   const snapshot = await get(ref(db, `posts/${id}`));
 
@@ -69,11 +68,10 @@ export const getPostById = async (id) => {
 
 export const sortPostsByAuthor = async () => {
   const postsSnapshot = await get(ref(db, "posts"));
-  const posts = Object.entries(postsSnapshot.val())
-    .map(([key, value]) => ({
-      ...value,
-      id: key,
-    }));
+  const posts = Object.entries(postsSnapshot.val()).map(([key, value]) => ({
+    ...value,
+    id: key,
+  }));
 
   // Check if posts is an array
   if (!Array.isArray(posts)) {
@@ -88,15 +86,13 @@ export const sortPostsByAuthor = async () => {
   return posts.reverse();
 };
 
-
 export const sortPostsByDate = async () => {
   const postsSnapshot = await get(ref(db, "posts"));
 
-  const posts = Object.entries(postsSnapshot.val())
-    .map(([key, value]) => ({
-      ...value,
-      id: key,
-    }));
+  const posts = Object.entries(postsSnapshot.val()).map(([key, value]) => ({
+    ...value,
+    id: key,
+  }));
 
   posts.sort((a, b) => b.createdOn - a.createdOn);
 
@@ -104,14 +100,12 @@ export const sortPostsByDate = async () => {
   return posts;
 };
 
-
 export const filterPostsByLikes = async () => {
   const postsSnapshot = await get(ref(db, "posts"));
-  const posts = Object.entries(postsSnapshot.val())
-    .map(([key, value]) => ({
-      ...value,
-      id: key,
-    }));
+  const posts = Object.entries(postsSnapshot.val()).map(([key, value]) => ({
+    ...value,
+    id: key,
+  }));
 
   // Check if posts is an array
   if (!Array.isArray(posts)) {
@@ -120,53 +114,59 @@ export const filterPostsByLikes = async () => {
   }
 
   // Filter posts with likes
-  const likedPosts = posts.filter(post => post.likedBy && Object.keys(post.likedBy).length > 0);
+  const likedPosts = posts.filter(
+    (post) => post.likedBy && Object.keys(post.likedBy).length > 0
+  );
 
   // console.log(likedPosts.reverse());
   return likedPosts.reverse();
 };
 
-
 export const filterPostsByComments = async () => {
-
   const postsSnapshot = await get(ref(db, "posts"));
-  const posts = Object.entries(postsSnapshot.val())
-    .map(([key, value]) => ({
-      ...value,
-      id: key,
-    }));
+  const posts = Object.entries(postsSnapshot.val()).map(([key, value]) => ({
+    ...value,
+    id: key,
+  }));
 
   const commentsSnapshot = await get(ref(db, "comments"));
-  const comments = Object.entries(commentsSnapshot.val())
-    .map(([key, value]) => ({
+  const comments = Object.entries(commentsSnapshot.val()).map(
+    ([key, value]) => ({
       ...value,
       id: key,
-    }));
+    })
+  );
 
   // Find posts with associated comments
-  const postsWithComments = posts.filter(post =>
-    comments.some(comment => comment.postId === post.id)
+  const postsWithComments = posts.filter((post) =>
+    comments.some((comment) => comment.postId === post.id)
   );
   // console.log(postsWithComments.reverse());
   return postsWithComments.reverse();
 };
 
 export const getTopPosts = async () => {
-  const postsSnapshot = await get(ref(db, 'posts'));
+  const postsSnapshot = await get(ref(db, "posts"));
   if (!postsSnapshot.exists()) return [];
 
-  const commentsSnapshot = await get(ref(db, 'comments'));
+  const commentsSnapshot = await get(ref(db, "comments"));
   const commentsData = commentsSnapshot.val();
 
-  const postsWithComments = Object.entries(postsSnapshot.val()).map(([key, value]) => {
-    const postId = key;
-    const commentsCount = commentsData ? Object.values(commentsData).filter(comment => comment.postId === postId).length : 0;
-    return { id: postId, commentsCount, ...value };
-  });
+  const postsWithComments = Object.entries(postsSnapshot.val()).map(
+    ([key, value]) => {
+      const postId = key;
+      const commentsCount = commentsData
+        ? Object.values(commentsData).filter(
+            (comment) => comment.postId === postId
+          ).length
+        : 0;
+      return { id: postId, commentsCount, ...value };
+    }
+  );
 
   postsWithComments.sort((a, b) => b.commentsCount - a.commentsCount);
 
-  const mappedPosts = postsWithComments.map(post => ({
+  const mappedPosts = postsWithComments.map((post) => ({
     ...post,
     likedBy: post.likedBy ? Object.keys(post.likedBy) : [],
     createdOn: new Date(post.createdOn).toString(),
@@ -174,9 +174,6 @@ export const getTopPosts = async () => {
 
   return mappedPosts.slice(0, 10);
 };
-
-
-
 
 export const getRecentPosts = async () => {
   const snapshot = await get(ref(db, "posts"));
@@ -198,26 +195,20 @@ export const getRecentPosts = async () => {
   return posts;
 };
 
-
-
-
-
-
 export const getNumberOfUsers = async () => {
   try {
-    const usersRef = ref(db, 'users');
+    const usersRef = ref(db, "users");
     const usersSnapshot = await get(usersRef);
 
     if (usersSnapshot.exists()) {
       const usersCount = Object.keys(usersSnapshot.val()).length; // Get the number of users by counting keys
 
       return usersCount;
-
     } else {
       return 0; // If no users found, return 0
     }
   } catch (error) {
-    console.error('Error fetching number of users:', error);
+    console.error("Error fetching number of users:", error);
 
     return 0;
   }
@@ -225,7 +216,7 @@ export const getNumberOfUsers = async () => {
 
 export const getNumberOfPosts = async () => {
   try {
-    const postsRef = ref(db, 'posts');
+    const postsRef = ref(db, "posts");
     const postsSnapshot = await get(postsRef);
 
     if (postsSnapshot.exists()) {
@@ -236,8 +227,7 @@ export const getNumberOfPosts = async () => {
       return 0; // If no posts found, return 0
     }
   } catch (error) {
-
-    console.error('Error fetching number of posts:', error);
+    console.error("Error fetching number of posts:", error);
     return 0;
   }
 };
@@ -309,17 +299,15 @@ export const editPost = async (postId, updatedTitle, updatedContent) => {
   }
 };
 
-
-
 export const getPostsByAuthor = (handle) => {
-  return get(query(ref(db, 'posts'), orderByChild('author'), equalTo(handle)));
-}
+  return get(query(ref(db, "posts"), orderByChild("author"), equalTo(handle)));
+};
 
 export const getDeletedPostsByAuthor = async (handle) => {
   try {
     const deletedPostsRef = query(
-      ref(db, 'posts'),
-      orderByChild('author'),
+      ref(db, "posts"),
+      orderByChild("author"),
       equalTo(handle)
     );
 
@@ -331,7 +319,7 @@ export const getDeletedPostsByAuthor = async (handle) => {
       if (post.isDeleted) {
         deletedPosts.push({
           id: childSnapshot.key,
-          ...post
+          ...post,
         });
       }
     });

@@ -1,10 +1,8 @@
-import { useContext } from "react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   getAllPosts,
   removePost,
   restorePost,
-  getDeletedPosts,
 } from "../services/posts.service";
 import Post from "../components/Post/Post";
 import { useSearchParams } from "react-router-dom";
@@ -12,7 +10,7 @@ import { ref, onChildChanged } from "firebase/database";
 import { db } from "../config/firebase-config";
 import { AppContext } from "../context/AppContext";
 import { Link } from "react-router-dom";
-import "./AllPosts.css"; // Import CSS file for styling
+import "./AllPosts.css";
 
 export default function AllPosts() {
   const [posts, setPosts] = useState([]);
@@ -29,57 +27,38 @@ export default function AllPosts() {
   };
 
   useEffect(() => {
-    getAllPosts(search).then(setPosts);
+    console.log("Fetching posts with search term:", search); // Debugging line
+    getAllPosts(null, search).then(setPosts);
   }, [search]);
 
   useEffect(() => {
     return onChildChanged(ref(db, "posts"), (snapshot) => {
       const value = snapshot.val();
       setPosts((posts) =>
-        posts.map((t) => {
-          if (
-            t.title === value.title &&
-            t.author === value.author &&
-            t.content === value.content
-          ) {
-            if (value.likedBy) {
-              t.likedBy = Object.keys(value.likedBy);
-            } else {
-              t.likedBy = [];
-            }
-            return t;
-          } else {
-            return t;
-          }
-        })
+        posts.map((t) =>
+          t.title === value.title &&
+          t.author === value.author &&
+          t.content === value.content
+            ? { ...t, likedBy: value.likedBy ? Object.keys(value.likedBy) : [] }
+            : t
+        )
       );
     });
   }, []);
 
   const handleRemovePost = async (postId) => {
     await removePost(postId);
-    const updatedPosts = [...posts]; // Clone the posts array
-    const removedPostIndex = updatedPosts.findIndex(
-      (post) => post.id === postId
-    );
-    if (removedPostIndex !== -1) {
-      updatedPosts.splice(removedPostIndex, 1); // Remove the post from the cloned array
-      setPosts(updatedPosts); // Update the state with the new array
-    }
+    setPosts((posts) => posts.filter((post) => post.id !== postId));
   };
 
   const handleRestorePost = async (postId) => {
     await restorePost(postId);
-    const updatedDeletedPosts = [...deletedPosts]; // Clone the deletedPosts array
-    const restoredPostIndex = updatedDeletedPosts.findIndex(
-      (post) => post.id === postId
-    );
-    if (restoredPostIndex !== -1) {
-      const restoredPost = updatedDeletedPosts.splice(restoredPostIndex, 1)[0]; // Remove the post from the cloned array
-      setDeletedPosts(updatedDeletedPosts); // Update the state with the new array
-
-      // Add the restored post to the posts array
-      setPosts([...posts, restoredPost]);
+    const restoredPost = deletedPosts.find((post) => post.id === postId);
+    if (restoredPost) {
+      setDeletedPosts((deletedPosts) =>
+        deletedPosts.filter((post) => post.id !== postId)
+      );
+      setPosts((posts) => [...posts, restoredPost]);
     }
   };
 
@@ -92,8 +71,8 @@ export default function AllPosts() {
     <div>
       <div className="search-filter-container">
         <div className="search-container">
-          <label htmlFor="search">Search</label>
           <input
+            placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             type="text"
@@ -106,6 +85,7 @@ export default function AllPosts() {
               backgroundColor: "white",
               color: "black",
               boxShadow: "inset 0px 0px 5px rgba(0, 0, 0, 0.5)",
+              marginLeft: "15px",
             }}
           />
         </div>
@@ -120,10 +100,7 @@ export default function AllPosts() {
             >
               Filter
             </button>
-            <ul
-              className={`dropdown-menu${showFilterDropdown ? " show" : ""}`}
-              style={{}}
-            >
+            <ul className={`dropdown-menu${showFilterDropdown ? " show" : ""}`}>
               <li>
                 <Link className="dropdown-item" to="/filtered-by-comments">
                   by Comments
@@ -153,10 +130,7 @@ export default function AllPosts() {
             >
               Sort
             </button>
-            <ul
-              className={`dropdown-menu${showSortDropdown ? " show" : ""}`}
-              style={{}}
-            >
+            <ul className={`dropdown-menu${showSortDropdown ? " show" : ""}`}>
               <li>
                 <Link className="dropdown-item" to="/sorted-by-author">
                   by Author
@@ -171,8 +145,9 @@ export default function AllPosts() {
           </div>
         </div>
       </div>
-      {/* Render posts */}
       {posts
+        .slice()
+        .reverse()
         .map((post) => (
           <div key={post.id}>
             <Post
@@ -185,8 +160,7 @@ export default function AllPosts() {
               likesCount={post.likedBy ? post.likedBy.length : 0}
             />
           </div>
-        ))
-        .reverse()}
+        ))}
     </div>
   );
 }

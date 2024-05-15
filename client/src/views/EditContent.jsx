@@ -98,7 +98,7 @@ export function EditPost({ post }) {
             className="btn btn-primary mr-2"
             onClick={handlePostUpdate}
             style={{
-              marginRight: "0.45rem",
+              marginRight: "-20px",
               fontWeight: "600",
               color: "white",
             }}

@@ -1,17 +1,17 @@
 .search-filter-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-container {
-    margin-right: 10px; /* Adjust margin between search and dropdowns */
-  }
-  
-  .dropdowns-container {
-    display: flex;
-  }
-  
-  .dropdown {
-    margin-right: 10px; /* Adjust margin between dropdowns */
-  }
-  
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.search-container {
+  margin-right: 10px; /* Adjust margin between search and dropdowns */
+}
+
+.dropdowns-container {
+  display: flex;
+}
+
+.dropdown {
+  margin-right: 10px; /* Adjust margin between dropdowns */
+}

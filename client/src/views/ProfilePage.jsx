@@ -15,10 +15,10 @@ function ProfilePage() {
         if (userSnapshot.exists()) {
           const userData = userSnapshot.val();
           setUserData(userData);
-          
+
           // Fetch deleted posts by author's handle
           const deletedPosts = await getDeletedPostsByAuthor(userData.handle);
-          
+
           // Set deleted user posts state
           setDeletedUserPosts(deletedPosts);
         } else {
@@ -28,19 +28,25 @@ function ProfilePage() {
         console.error("Error fetching data:", error);
       }
     }
-    
+
     fetchData();
   }, [handle]);
 
   return (
-    <div>
+    <div style={{ marginTop: "13rem" }}>
       {userData && (
         <div>
-          <h1>
+          <p>
+            <span style={{ fontWeight: "700" }}>Name: </span>
             {userData.firstName} {userData.lastName}
-          </h1>
-          <p>Email: {userData.email}</p>
-          <p>Handle: {userData.handle}</p>
+          </p>
+          <p>
+            <span style={{ fontWeight: "700" }}>Email:</span> {userData.email}
+          </p>
+          <p>
+            <span style={{ fontWeight: "700" }}>Username:</span>{" "}
+            {userData.handle}
+          </p>
         </div>
       )}
 

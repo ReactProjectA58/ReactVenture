@@ -55,7 +55,7 @@ function App() {
     <>
       <div>
         <img
-          src="/532.png"
+          src={`${BASE}532.png`}
           alt=""
           style={{
             width: "114%",

@@ -4,6 +4,7 @@ import "./SearchedUser.css";
 import { AppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import { blockUser, unblockUser } from "../../services/users.service";
+import { BASE } from "../../common/constants";
 
 export default function SearchedUser({ user }) {
   const { userData } = useContext(AppContext);
@@ -59,7 +60,7 @@ export default function SearchedUser({ user }) {
         )}
 
         {isAdmin && (
-          <Link to={`/user/${user.id}`} className="profile-link">
+          <Link to={`${BASE}user/${user.id}`} className="profile-link">
             <button className="profile-button">Profile</button>
           </Link>
         )}
@@ -75,6 +76,6 @@ SearchedUser.propTypes = {
     lastName: PropTypes.string.isRequired,
     handle: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
-    isBlocked: PropTypes.bool.isRequired
+    isBlocked: PropTypes.bool.isRequired,
   }).isRequired,
 };

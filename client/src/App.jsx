@@ -27,6 +27,7 @@ import SortedByAuthor from "./components/Sort-and-filter/SortedByAuthor.jsx";
 import SortedByDate from "./components/Sort-and-filter/SortedByDate.jsx";
 import RestrictedHeader from "./RestrictedHeader.jsx";
 import Blocked from "./views/Blocked.jsx";
+import { BASE } from "./common/constants.js";
 
 function App() {
   const [appState, setAppState] = useState({
@@ -67,21 +68,14 @@ function App() {
       </div>
       <BrowserRouter>
         <AppContext.Provider value={{ ...appState, setAppState }}>
-          {appState.userData && (
-            <>
-              {appState.userData.isBlocked ? (
-                <RestrictedHeader userData={appState.userData} />
-              ) : (
-                <Header />
-              )}
-            </>
-          )}
+          <Header />
+
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            <Route path={`${BASE}`} element={<Home />} />
+            <Route path={`${BASE}login`} element={<Login />} />
+            <Route path={`${BASE}register`} element={<Register />} />
             <Route
-              path="/posts"
+              path={`${BASE}posts`}
               element={
                 <Authenticated>
                   <AllPosts />
@@ -89,7 +83,7 @@ function App() {
               }
             />
             <Route
-              path="/posts/:id"
+              path={`${BASE}posts/:id`}
               element={
                 <Authenticated>
                   <SinglePost />
@@ -97,7 +91,7 @@ function App() {
               }
             />
             <Route
-              path="/posts-create"
+              path={`${BASE}posts-create`}
               element={
                 <Authenticated>
                   <CreatePost />
@@ -105,7 +99,7 @@ function App() {
               }
             />
             <Route
-              path="/deleted"
+              path={`${BASE}deleted`}
               element={
                 <Authenticated>
                   <DeletedPosts />
@@ -113,7 +107,7 @@ function App() {
               }
             />
             <Route
-              path="/user-search"
+              path={`${BASE}user-search`}
               element={
                 <Authenticated>
                   <UserSearch />
@@ -121,7 +115,7 @@ function App() {
               }
             />
             <Route
-              path="/my-profile"
+              path={`${BASE}my-profile`}
               element={
                 <Authenticated>
                   <UserList />
@@ -129,7 +123,7 @@ function App() {
               }
             />
             <Route
-              path="/user/:handle"
+              path={`${BASE}user/:handle`}
               element={
                 <Authenticated>
                   <UserPage />
@@ -137,7 +131,7 @@ function App() {
               }
             />
             <Route
-              path="/filtered-by-comments"
+              path={`${BASE}filtered-by-comments`}
               element={
                 <Authenticated>
                   <FilteredByComments />
@@ -145,7 +139,7 @@ function App() {
               }
             />
             <Route
-              path="/filtered-by-likes"
+              path={`${BASE}filtered-by-likes`}
               element={
                 <Authenticated>
                   <FilteredByLikes />
@@ -153,7 +147,7 @@ function App() {
               }
             />
             <Route
-              path="/sorted-by-author"
+              path={`${BASE}sorted-by-author`}
               element={
                 <Authenticated>
                   <SortedByAuthor />
@@ -161,7 +155,7 @@ function App() {
               }
             />
             <Route
-              path="/sorted-by-date"
+              path={`${BASE}sorted-by-date`}
               element={
                 <Authenticated>
                   <SortedByDate />
@@ -170,7 +164,7 @@ function App() {
             />
 
             <Route path="*" element={<NotFound />} />
-            <Route path="/blocked" element={<Blocked />} />
+            <Route path={`${BASE}blocked`} element={<Blocked />} />
           </Routes>
           <Footer />
         </AppContext.Provider>

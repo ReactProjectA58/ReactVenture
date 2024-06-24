@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext";
 import { loginUser } from "../services/auth.service";
+import { BASE } from "../common/constants";
 
 export default function Login() {
   const { user, setAppState } = useContext(AppContext);
@@ -15,14 +16,14 @@ export default function Login() {
 
   useEffect(() => {
     if (user) {
-      navigate(location.state?.from.pathname || "/");
+      navigate(location.state?.from.pathname || `${BASE}`);
     }
   }, [user]);
 
   const login = async () => {
     const { user } = await loginUser(form.email, form.password);
     setAppState({ user, userData: null });
-    navigate(location.state?.from.pathname || "/");
+    navigate(location.state?.from.pathname || `${BASE}`);
   };
 
   const updateForm = (prop) => (e) => {

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { BASE } from "../../common/constants";
 
 export default function AdminPanelDropdown() {
   return (
@@ -14,13 +15,13 @@ export default function AdminPanelDropdown() {
       </button>
       <ul className="dropdown-menu" style={{}}>
         <li>
-          <Link className="dropdown-item" to="/user-search">
+          <Link className="dropdown-item" to={`${BASE}user-search`}>
             Users searcher
           </Link>
         </li>
         <li>
-          <Link className="dropdown-item" to="/posts"> 
-          View All Posts
+          <Link className="dropdown-item" to={`${BASE}posts`}>
+            View All Posts
           </Link>
         </li>
       </ul>

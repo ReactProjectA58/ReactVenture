@@ -10,6 +10,7 @@ import {
 } from "../../services/posts.service";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import { BASE } from "../../common/constants";
 
 export default function Post({ post, showViewButton, onRemove, onRestore }) {
   const { user, userData } = useContext(AppContext);
@@ -106,7 +107,7 @@ export default function Post({ post, showViewButton, onRemove, onRestore }) {
             )}
 
           {showViewButton && (
-            <Link to={`/posts/${post.id}`} className="post-link">
+            <Link to={`${BASE}posts/${post.id}`} className="post-link">
               <button className="view-button">View</button>
             </Link>
           )}

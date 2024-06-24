@@ -11,6 +11,7 @@ import { db } from "../config/firebase-config";
 import { AppContext } from "../context/AppContext";
 import { Link } from "react-router-dom";
 import "./AllPosts.css";
+import { BASE } from "../common/constants";
 
 export default function AllPosts() {
   const [posts, setPosts] = useState([]);
@@ -102,18 +103,21 @@ export default function AllPosts() {
             </button>
             <ul className={`dropdown-menu${showFilterDropdown ? " show" : ""}`}>
               <li>
-                <Link className="dropdown-item" to="/filtered-by-comments">
+                <Link
+                  className="dropdown-item"
+                  to={`${BASE}filtered-by-comments`}
+                >
                   by Comments
                 </Link>
               </li>
               <li>
-                <Link className="dropdown-item" to="/filtered-by-likes">
+                <Link className="dropdown-item" to={`${BASE}filtered-by-likes`}>
                   by Likes
                 </Link>
               </li>
               {userData && userData.isAdmin && (
                 <li>
-                  <Link className="dropdown-item" to="/deleted">
+                  <Link className="dropdown-item" to={`${BASE}deleted`}>
                     by Deleted Posts
                   </Link>
                 </li>
@@ -132,12 +136,12 @@ export default function AllPosts() {
             </button>
             <ul className={`dropdown-menu${showSortDropdown ? " show" : ""}`}>
               <li>
-                <Link className="dropdown-item" to="/sorted-by-author">
+                <Link className="dropdown-item" to={`${BASE}sorted-by-author`}>
                   by Author
                 </Link>
               </li>
               <li>
-                <Link className="dropdown-item" to="/sorted-by-date">
+                <Link className="dropdown-item" to={`${BASE}sorted-by-date`}>
                   by Date
                 </Link>
               </li>

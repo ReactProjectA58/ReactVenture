@@ -4,6 +4,7 @@ import { AppContext } from "../context/AppContext";
 import { editNames } from "../services/users.service";
 import { getAllPosts } from "../services/posts.service";
 import "./UserProfile.css"; // Import CSS file for styling
+import { BASE } from "../common/constants";
 
 export default function UserProfile() {
   const { userData, user } = useContext(AppContext);
@@ -157,7 +158,7 @@ export default function UserProfile() {
             <ul className="posts-list">
               {userPosts.map((post) => (
                 <li key={post.id}>
-                  <Link to={`/posts/${post.id}`}>
+                  <Link to={`${BASE}posts/${post.id}`}>
                     <h1>{post.title}</h1>
                   </Link>
                 </li>

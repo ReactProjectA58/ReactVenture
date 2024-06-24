@@ -3,6 +3,7 @@ import { registerUser } from "../services/auth.service";
 import { AppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { createUserHandle, getUserByHandle } from "../services/users.service";
+import { BASE } from "../common/constants";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -16,7 +17,7 @@ export default function Register() {
   const navigate = useNavigate();
 
   if (user) {
-    navigate("/");
+    navigate(`${BASE}`);
   }
 
   const updateForm = (prop) => (e) => {
@@ -82,7 +83,7 @@ export default function Register() {
         credential.user.email
       );
       setAppState({ user: credential.user, userData: null });
-      navigate("/");
+      navigate(`${BASE}`);
     } catch (error) {
       if (error.message.includes("auth/email-already-in-use")) {
         window.alert("User has already been registered!");

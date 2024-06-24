@@ -21,36 +21,41 @@ Welcome to ReactVenture, where travelers come together to share their adventures
 ## Features
 
 - **Home Page:**
+
   - Display of most recent and popular posts.
 
 - **Register:**
+
   - Create your profile with username, email, and password.
 
 - **Login:**
+
   - Access your account quickly through the login page.
 
 - **All posts:**
+
   - Browse posts or search by keywords.
   - Sort posts by Author, by Date.
   - Create posts with titles and content.
   - Edit posts and comments.
 
 - **Individual Post View:**
+
   - View full post content and comments.
   - Interact with posts and comments through likes and comments.
 
 - **Profile:**
+
   - View user activity and liked posts/comments.
 
-
 - **Admin:**
+
   - Moderate content by deleting posts/comments.
   - Block users if necessary.
 
 - **Enjoy the adventure!** ;)
 
 ## Getting Started
-
 
 ### Setup and run locally:
 
@@ -141,8 +146,7 @@ Fields:
         A map containing IDs of comments liked by the user as keys and boolean values indicating whether the comment is liked.
 
     likedPosts (Map)
-        A map containing IDs of posts liked by the user as keys and boolean values indicating whether the post is liked.    
-
+        A map containing IDs of posts liked by the user as keys and boolean values indicating whether the post is liked.
 
 ## Frequently Asked Questions
 
@@ -161,8 +165,6 @@ ReactVenture is developed by **TEAM 3**.
 
 We value open communication with our community to enhance the platform continuously. Your feedback is invaluable in shaping ReactVenture's future.
 
-
 ## External Resources
 
-ReactVenture leverages Firebase in accordance with their *Terms and Conditions* for fair usage of their services.
-
+ReactVenture leverages Firebase in accordance with their _Terms and Conditions_ for fair usage of their services.
